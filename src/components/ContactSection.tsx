@@ -145,7 +145,7 @@ export function ContactSection() {
         formData.append(i === 0 ? "attachment" : `attachment_${i}`, file);
       });
 
-      const res = await fetch(`https://formsubmit.co/${PROFILE.email}`, {
+      const res = await fetch("https://formsubmit.co/67832e6024f72919dfd54fc281b2dfe9", {
         method: "POST",
         body: formData,
         headers: {

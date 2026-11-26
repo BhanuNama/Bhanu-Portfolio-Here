@@ -71,7 +71,7 @@ export const PROFILE = {
   links: {
     linkedin: "https://www.linkedin.com/in/bhanu-nama-654957281/",
     github: "https://github.com/BhanuNama",
-    portfolio: "#",
+    portfolio: "https://bhanunama.pages.dev",
   },
   githubUsername: "BhanuNama",
   avatarUrl: "/avatar.jpg" as string | null,
