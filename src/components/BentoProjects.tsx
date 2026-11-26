@@ -166,7 +166,7 @@ export function BentoProjects({ onSelectProject }: BentoProjectsProps) {
                           ease: [0.22, 1, 0.36, 1],
                         }
                   }
-                  className={colSpan}
+                  className={`min-w-0 ${colSpan}`}
                 >
                 <TiltPaperCard
                   onClick={() => {

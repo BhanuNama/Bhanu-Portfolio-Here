@@ -18,7 +18,7 @@ interface AppContextValue {
 }
 
 const AppContext = createContext<AppContextValue>({
-  theme: "paper",
+  theme: "dark",
   toggleTheme: () => {},
   soundEnabled: true,
   toggleSound: () => {},
@@ -40,7 +40,7 @@ export function SmoothScrollProvider({
   scrollLocked?: boolean;
   initialScrollBehavior?: "top" | "restore";
 }) {
-  const [theme, setTheme] = useState<ThemeMode>("paper");
+  const [theme, setTheme] = useState<ThemeMode>("dark");
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -51,7 +51,7 @@ export function SmoothScrollProvider({
       setTheme(saved);
       document.documentElement.setAttribute("data-theme", saved);
     } else {
-      document.documentElement.setAttribute("data-theme", "paper");
+      document.documentElement.setAttribute("data-theme", "dark");
     }
 
     const savedSound = window.localStorage.getItem("bn-sound");

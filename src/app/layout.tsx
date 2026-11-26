@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fontsource/plus-jakarta-sans/400.css";
 import "@fontsource/plus-jakarta-sans/500.css";
 import "@fontsource/plus-jakarta-sans/600.css";
@@ -17,13 +17,19 @@ export const metadata: Metadata = {
     "Portfolio of Bhanu Nama — Full-Stack & AI Engineer building production web apps, Spring Boot systems, FastAPI services, and multi-agent RAG pipelines.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <body className="antialiased selection:bg-[#e04e26] selection:text-white">
         <div className="paper-grain" aria-hidden="true" />
         {children}

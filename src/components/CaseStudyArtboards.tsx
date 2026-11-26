@@ -631,7 +631,7 @@ function GenomeCaseArtboard() {
             </span>
           </div>
 
-          <div className="grid grid-cols-5 gap-2 text-center font-mono text-xs">
+          <div className="grid grid-cols-3 gap-2 text-center font-mono text-xs sm:grid-cols-5">
             {allRules.map((rule) => {
               const hit = active.rules.includes(rule);
               return (
@@ -765,7 +765,7 @@ function FluentCaseArtboard() {
           <div className="mb-3 font-mono text-[10px] uppercase tracking-wider text-[var(--ink-muted)]">
             Select Any Part (A–J) to Inspect Psychometric Formula
           </div>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
             {parts.map((p) => (
               <button
                 key={p.id}
@@ -1233,7 +1233,7 @@ function ShowTimeCaseArtboard() {
             </span>
           </div>
 
-          <div className="my-5 mx-auto grid grid-cols-6 gap-2">
+          <div className="my-5 mx-auto grid grid-cols-6 gap-1.5 sm:gap-2">
             {[0, 1, 2].map((r) =>
               [0, 1, 2, 3, 4, 5].map((c) => {
                 const id = `${r}-${c}`;
@@ -1245,7 +1245,7 @@ function ShowTimeCaseArtboard() {
                     type="button"
                     whileTap={{ scale: 0.9 }}
                     onClick={() => toggleSeat(id)}
-                    className={`h-8 w-10 rounded-lg border font-mono text-[10px] font-semibold transition-all ${
+                    className={`h-8 w-8 rounded-lg border font-mono text-[10px] font-semibold transition-all sm:w-10 ${
                       isOcc
                         ? "cursor-not-allowed border-[var(--border-strong)] bg-[var(--bg-well)] text-[var(--ink-muted)] opacity-55"
                         : isSel

@@ -193,7 +193,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7"
+            className="min-w-0 lg:col-span-7"
           >
             <TiltPaperCard className="drafting-grid flex h-full flex-col justify-between rounded-[28px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-6 shadow-[var(--shadow-card)] sm:p-8">
               <div>
@@ -350,7 +350,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex flex-col justify-between overflow-hidden rounded-[28px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-6 shadow-[var(--shadow-card)] sm:p-8 lg:col-span-5"
+            className="relative flex min-w-0 flex-col justify-between overflow-hidden rounded-[28px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-6 shadow-[var(--shadow-card)] sm:p-8 lg:col-span-5"
           >
             {/* Tactile "SEALED // SENT" Ink Stamp VFX */}
             <AnimatePresence>
@@ -622,7 +622,7 @@ export function ContactSection() {
         </div>
 
         {/* Crisp Paper Footer with Magnetic Back-to-Top */}
-        <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-[var(--border-hairline)] pt-8 font-mono text-[11px] text-[var(--ink-muted)] sm:flex-row">
+        <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-[var(--border-hairline)] pt-8 text-center font-mono text-[11px] text-[var(--ink-muted)] sm:flex-row sm:text-left">
           <span>
             © {new Date().getFullYear()} {PROFILE.name} · {PROFILE.location} · Zero templates, all custom code
           </span>

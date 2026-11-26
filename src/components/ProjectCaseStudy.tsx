@@ -282,7 +282,7 @@ function CaseStudyContent({ project }: { project: ProjectItem }) {
 
         {/* Key Engineering Decisions & Spec Sheet */}
         <section className="mt-14 grid gap-6 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <div className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--ink-muted)]">
               04 · Key Engineering Decisions
             </div>
@@ -313,7 +313,7 @@ function CaseStudyContent({ project }: { project: ProjectItem }) {
             </div>
           </div>
 
-          <div className="space-y-6 lg:col-span-5">
+          <div className="min-w-0 space-y-6 lg:col-span-5">
             <div>
               <div className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--ink-muted)]">
                 05 · Technical Spec Sheet

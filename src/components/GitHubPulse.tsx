@@ -271,7 +271,7 @@ export function GitHubPulse() {
               mouseY.set(-350);
               setHoveredDay(null);
             }}
-            className="group relative flex flex-col justify-between overflow-hidden rounded-[26px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow-card)] sm:p-6 lg:col-span-8"
+            className="group relative flex min-w-0 flex-col justify-between overflow-hidden rounded-[26px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow-card)] sm:p-6 lg:col-span-8"
           >
             <motion.div
               aria-hidden="true"
@@ -411,7 +411,7 @@ export function GitHubPulse() {
           </div>
 
           {/* Right 4 Cols: Recent Ship Log Card */}
-          <div className="flex flex-col justify-between rounded-[26px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow-card)] sm:p-6 lg:col-span-4">
+          <div className="flex min-w-0 flex-col justify-between rounded-[26px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow-card)] sm:p-6 lg:col-span-4">
             <div>
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--ink-muted)]">

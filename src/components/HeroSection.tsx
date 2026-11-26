@@ -720,9 +720,9 @@ export function HeroSection({ onSelectProject }: HeroSectionProps) {
           transition={{ duration: 0.75, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
           className="mt-14 sm:mt-16"
         >
-          {/* Desktop 7-Card Fanned Deck (All 6 Projects + Center Profile) */}
-          <div className="hidden flex-col items-center md:flex">
-            <div className="relative mx-auto flex h-[335px] w-full max-w-5xl items-center justify-center">
+          {/* Desktop 7-Card Fanned Deck (lg+ screens so tablets stay cleanly centered) */}
+          <div className="hidden flex-col items-center lg:flex">
+            <div className="relative mx-auto flex h-[335px] w-full max-w-5xl items-center justify-center lg:scale-[0.94] xl:scale-100">
               {deckOrder.map((card, index) => {
                 const geom = SLOT_GEOMETRY[index];
                 const isHovered = hoveredCard === index;
@@ -810,9 +810,9 @@ export function HeroSection({ onSelectProject }: HeroSectionProps) {
             </button>
           </div>
 
-          {/* Mobile Fanned Curiosity Card Deck (Profile Card First!) */}
-          <div className="flex flex-col items-center md:hidden">
-            <div className="relative h-[300px] w-[236px]">
+          {/* Mobile & Tablet Fanned Curiosity Card Deck (Profile Card First!) */}
+          <div className="flex flex-col items-center lg:hidden">
+            <div className="relative h-[300px] w-[224px] sm:w-[248px]">
               {mobileStack.map((slot, index) => (
                 <MobileCardItem
                   key={slot.id}
