@@ -108,7 +108,7 @@ export function ExperienceSection() {
 
               <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                 {/* Left: Only User-Provided Experience Details */}
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2.5">
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-hairline)] bg-[var(--bg-paper)] px-3 py-1 font-mono text-[11px] font-medium text-[var(--ink-primary)]">
                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />

@@ -275,8 +275,8 @@ export function HeroSection({ onSelectProject }: HeroSectionProps) {
     offset: ["start start", "end start"],
   });
 
-  const deckScrollSpread = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const deckScrollY = useTransform(scrollYProgress, [0, 1], [0, -24]);
+  const deckScrollSpread = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const deckScrollY = useTransform(scrollYProgress, [0, 1], [0, -18]);
 
   const handleCopyEmail = () => {
     paperSound.playClick();
@@ -619,16 +619,16 @@ export function HeroSection({ onSelectProject }: HeroSectionProps) {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)] px-3.5 py-1.5 shadow-[var(--shadow-card)]"
+            className="mb-6 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)] px-3.5 py-1.5 shadow-[var(--shadow-card)]"
           >
-            <span className="h-2 w-2 rounded-full bg-[var(--accent)] animate-pulse" />
-            <span className="font-mono text-[11px] font-medium tracking-wide text-[var(--ink-secondary)]">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--accent)] animate-pulse" />
+            <span className="font-mono text-[10px] font-medium tracking-wide text-[var(--ink-secondary)] sm:text-[11px]">
               {PROFILE.availability} · {PROFILE.location}
             </span>
           </motion.div>
 
           {/* Masked Editorial Headline Reveal */}
-          <h1 className="text-4xl font-bold tracking-[-0.035em] text-[var(--ink-primary)] sm:text-6xl lg:text-[4.25rem] lg:leading-[1.06]">
+          <h1 className="text-[2rem] leading-[1.12] font-bold tracking-[-0.035em] text-[var(--ink-primary)] sm:text-6xl lg:text-[4.25rem] lg:leading-[1.06]">
             <span className="block overflow-hidden pb-1">
               <motion.span
                 initial={{ y: "105%", opacity: 0 }}

@@ -175,7 +175,7 @@ export function SmoothScrollProvider({
         <div
           role="status"
           aria-live="polite"
-          className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full border border-[var(--border-strong)] bg-[var(--ink-primary)] px-4 py-2 font-mono text-xs text-[var(--bg-paper)] shadow-[var(--shadow-float)] transition-all"
+          className="fixed bottom-6 left-1/2 z-50 max-w-[calc(100vw-2rem)] -translate-x-1/2 truncate rounded-full border border-[var(--border-strong)] bg-[var(--ink-primary)] px-4 py-2 font-mono text-xs text-[var(--bg-paper)] shadow-[var(--shadow-float)] transition-all"
         >
           {toastMessage}
         </div>

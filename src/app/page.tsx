@@ -25,9 +25,9 @@ export default function HomePage() {
 
   return (
     <SmoothScrollProvider scrollLocked={paletteOpen} initialScrollBehavior="restore">
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen w-full overflow-x-clip">
         <Navbar onOpenPalette={() => setPaletteOpen(true)} />
-        <main>
+        <main className="w-full overflow-x-clip">
           <HeroSection onSelectProject={openProjectPage} />
           <BentoProjects onSelectProject={openProjectPage} />
           <ExperienceSection />

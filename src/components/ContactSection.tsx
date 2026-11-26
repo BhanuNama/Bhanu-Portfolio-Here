@@ -224,13 +224,13 @@ export function ContactSection() {
                 </p>
 
                 {/* Tactile Copy Cards with Flip Confirmation */}
-                <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                <div className="mt-7 grid min-w-0 gap-3 sm:grid-cols-2">
                   <motion.button
                     type="button"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => copyText(PROFILE.email, "email", "Email")}
-                    className="group relative flex items-center justify-between overflow-hidden rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4 text-left transition-colors hover:border-[var(--ink-primary)]"
+                    className="group relative flex min-w-0 items-center justify-between overflow-hidden rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4 text-left transition-colors hover:border-[var(--ink-primary)]"
                   >
                     <div className="flex items-center gap-3 overflow-hidden">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]">
@@ -269,7 +269,7 @@ export function ContactSection() {
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => copyText(PROFILE.phone, "phone", "Phone")}
-                    className="group relative flex items-center justify-between overflow-hidden rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4 text-left transition-colors hover:border-[var(--ink-primary)]"
+                    className="group relative flex min-w-0 items-center justify-between overflow-hidden rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4 text-left transition-colors hover:border-[var(--ink-primary)]"
                   >
                     <div className="flex items-center gap-3 overflow-hidden">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--bg-well)] text-[var(--ink-primary)]">

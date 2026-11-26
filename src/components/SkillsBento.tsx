@@ -440,7 +440,7 @@ export function SkillsBento({ onSelectProject }: SkillsBentoProps) {
                 </div>
 
                 {/* Right Column: Icon-Equipped Magnetic Skill Pills */}
-                <div className="flex flex-1 flex-wrap items-center gap-2">
+                <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
                   {group.items.map((skill) => {
                     const isSelected = selectedSkill === skill.name;
                     const isPinned = pinnedSkill === skill.name;

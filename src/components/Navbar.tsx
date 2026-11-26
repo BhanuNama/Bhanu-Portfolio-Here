@@ -59,7 +59,7 @@ export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 px-4 pt-4 sm:px-6">
+    <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-6 sm:pt-4">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
         {/* Left Floating Brand + Nav Pill */}
         <motion.nav
@@ -67,15 +67,15 @@ export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           aria-label="Primary navigation"
-          className="relative flex flex-1 items-center justify-between rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)]/90 px-2.5 py-1.5 backdrop-blur-md shadow-[var(--shadow-card)] sm:flex-initial sm:gap-2"
+          className="relative flex min-w-0 flex-1 items-center justify-between rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)]/90 px-2.5 py-1.5 backdrop-blur-md shadow-[var(--shadow-card)] md:flex-initial md:gap-2"
         >
           <button
             type="button"
             onClick={() => handleNav("hero")}
-            className="group flex items-center gap-2.5 rounded-full pr-3 text-left transition-colors"
+            className="group flex min-w-0 items-center gap-2.5 rounded-full pr-2 text-left transition-colors sm:pr-3"
           >
             <AvatarEmblem size="sm" />
-            <span className="text-sm font-semibold tracking-tight text-[var(--ink-primary)]">
+            <span className="truncate text-sm font-semibold tracking-tight text-[var(--ink-primary)]">
               {PROFILE.name}
             </span>
           </button>
@@ -118,7 +118,19 @@ export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
           </div>
 
           {/* Mobile Actions */}
-          <div className="flex items-center gap-1.5 md:hidden">
+          <div className="flex shrink-0 items-center gap-1.5 md:hidden">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === "paper" ? "dark carbon" : "light paper"} mode`}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border-hairline)] bg-[var(--bg-well)] text-[var(--ink-primary)]"
+            >
+              {theme === "paper" ? (
+                <Moon className="h-3.5 w-3.5" />
+              ) : (
+                <Sun className="h-3.5 w-3.5" />
+              )}
+            </button>
             <button
               type="button"
               onClick={() => {
@@ -146,7 +158,7 @@ export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
           initial={{ y: -24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden items-center gap-2 sm:flex"
+          className="hidden items-center gap-2 md:flex"
         >
           <button
             type="button"
