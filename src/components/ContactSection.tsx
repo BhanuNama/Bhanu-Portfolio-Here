@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
@@ -621,26 +621,110 @@ export function ContactSection() {
           </motion.div>
         </div>
 
-        {/* Crisp Paper Footer with Magnetic Back-to-Top */}
-        <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-[var(--border-hairline)] pt-8 text-center font-mono text-[11px] text-[var(--ink-muted)] sm:flex-row sm:text-left">
-          <span>
-            © {new Date().getFullYear()} {PROFILE.name} · {PROFILE.location} · Zero templates, all custom code
-          </span>
-          <Magnetic strength={0.2}>
-            <button
-              type="button"
-              onClick={() => {
-                paperSound.playCardFlick();
-                scrollToSection("hero");
-              }}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)] px-3.5 py-1.5 font-mono text-[10px] font-medium text-[var(--ink-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
-            >
-              <span>Back to Top</span>
-              <ArrowUp className="h-3 w-3" />
-            </button>
-          </Magnetic>
-        </footer>
+        <ChillFooter scrollToSection={scrollToSection} />
       </div>
     </section>
+  );
+}
+
+const CHILL_VIBES = [
+  { tag: "☕", text: "fueled by chai & console.log" },
+  { tag: "🐛", text: "0 bugs left (don't check git blame)" },
+  { tag: "⚡", text: "zero templates · survived on localhost" },
+  { tag: "🎧", text: "temp = 0.2 · vibing & shipping" },
+  { tag: "✨", text: "made with React, Framer & late nights" },
+] as const;
+
+function ChillFooter({
+  scrollToSection,
+}: {
+  scrollToSection: (id: string) => void;
+}) {
+  const [vibeIdx, setVibeIdx] = useState(0);
+  const [topHover, setTopHover] = useState(false);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setVibeIdx((i) => (i + 1) % CHILL_VIBES.length);
+    }, 4500);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const currentVibe = CHILL_VIBES[vibeIdx];
+
+  return (
+    <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-[var(--border-hairline)] pt-7 font-mono text-[11px] text-[var(--ink-muted)] md:flex-row">
+      {/* Left: Crisp Copyright */}
+      <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center md:justify-start md:text-left">
+        <span className="text-[var(--ink-secondary)]">
+          © {new Date().getFullYear()} {PROFILE.name}
+        </span>
+        <span>·</span>
+        <span>{PROFILE.location}</span>
+        <span className="hidden sm:inline">·</span>
+        <span className="hidden sm:inline">All custom code</span>
+      </div>
+
+      {/* Center: Clickable Animated Chill Vibe Ticker */}
+      <motion.button
+        type="button"
+        onClick={() => {
+          paperSound.playClick();
+          setVibeIdx((i) => (i + 1) % CHILL_VIBES.length);
+        }}
+        whileHover={{ y: -1.5 }}
+        whileTap={{ scale: 0.96 }}
+        title="Click to cycle vibe"
+        className="group inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)] px-3.5 py-1.5 shadow-2xs transition-colors hover:border-[var(--accent)]/60"
+      >
+        <motion.span
+          key={`ico-${vibeIdx}`}
+          initial={{ rotate: -18, scale: 0.7 }}
+          animate={{ rotate: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 360, damping: 16 }}
+          className="text-xs leading-none"
+        >
+          {currentVibe.tag}
+        </motion.span>
+
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={currentVibe.text}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="truncate text-[10.5px] text-[var(--ink-secondary)] group-hover:text-[var(--ink-primary)]"
+          >
+            {currentVibe.text}
+          </motion.span>
+        </AnimatePresence>
+
+        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)] opacity-75 group-hover:animate-ping" />
+      </motion.button>
+
+      {/* Right: Magnetic Animated Elevator Button */}
+      <Magnetic strength={0.22}>
+        <button
+          type="button"
+          onMouseEnter={() => setTopHover(true)}
+          onMouseLeave={() => setTopHover(false)}
+          onClick={() => {
+            paperSound.playCardFlick();
+            scrollToSection("hero");
+          }}
+          className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)] px-3.5 py-1.5 font-mono text-[10px] font-medium text-[var(--ink-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+        >
+          <span>Back to Top</span>
+          <motion.span
+            animate={topHover ? { y: [0, -3, 0] } : { y: 0 }}
+            transition={{ duration: 0.6, repeat: topHover ? Infinity : 0, ease: "easeInOut" }}
+            className="inline-flex"
+          >
+            <ArrowUp className="h-3 w-3" />
+          </motion.span>
+        </button>
+      </Magnetic>
+    </footer>
   );
 }
