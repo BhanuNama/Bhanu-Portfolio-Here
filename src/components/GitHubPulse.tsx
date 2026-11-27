@@ -65,8 +65,8 @@ const RECENT_COMMITS = [
     tag: "WebRTC",
   },
   {
-    repo: "Claude-Group-2",
-    msg: "feat(graph): 6-specialist debate board over 285k Neo4j HPO edges",
+    repo: "Odyssey-Solver-rare-disease",
+    msg: "feat(v2): Resnik MICA, Bayesian LR, <20ms Shannon IG & 100-case eval",
     tag: "GraphRAG",
   },
   {

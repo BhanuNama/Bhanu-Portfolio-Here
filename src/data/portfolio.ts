@@ -4,7 +4,7 @@ export interface ProjectItem {
   repoName: string;
   title: string;
   subtitle: string;
-  category: "Real-Time & P2P" | "GraphRAG & AI" | "Full-Stack AI" | "Full-Stack";
+  category: "Real-Time & P2P" | "GraphRAG & AI" | "Full-Stack AI";
   year: string;
   tagline: string;
   summary: string;
@@ -156,76 +156,76 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: "odyssey-solver",
     fig: "FIG. 02",
-    repoName: "BhanuNama/Claude-Group-2",
-    title: "Odyssey Solver",
-    subtitle: "Rare Disease Multi-Agent GraphRAG Decision Support",
+    repoName: "BhanuNama/Odyssey-Solver-rare-disease",
+    title: "Odyssey-Dx V2",
+    subtitle: "Bayesian GraphRAG & Multi-Agent Rare Disease Platform",
     category: "GraphRAG & AI",
     year: "2026",
-    tagline: "285k+ Neo4j HPO graph + 6-specialist LangGraph debate & Red-Team critic.",
+    tagline: "Resnik MICA + Bayesian LR across 12.8k diseases, <20ms Shannon IG clarifier & 100-case eval.",
     summary:
-      "Multi-agent clinical decision support platform combining Human Phenotype Ontology (HPO) & Orphanet knowledge graphs in Neo4j with a 6-specialist LangGraph debate board, adversarial reviewer, and CMO arbiter.",
+      "Investigational rare genetic disease clinical decision platform unifying 12,883 rare diseases and 19,894 HPO terms across Neo4j and an in-memory OntologyKnowledgeStore—combining Resnik MICA ancestry similarity, Orphanet frequency Bayesian Likelihood Ratios, sub-20ms Shannon Information-Gain clarifying questions, and a citation-locked 6-specialist LangGraph board.",
     tools: [
       "LangGraph",
       "Neo4j",
-      "FastAPI",
-      "React",
-      "SSE Streaming",
-      "Groq / DeepSeek",
-      "Lucene",
+      "NumPy",
+      "FastAPI SSE",
+      "React 19",
+      "Groq / NIM",
+      "Phenopackets v2",
     ],
     metrics: [
-      { label: "Knowledge Graph", value: "12.8k Diseases · 285k HPO" },
-      { label: "Debate Panel", value: "6 Specialists + Red Team" },
-      { label: "Scoring", value: "IC-Weighted GraphRAG" },
+      { label: "100-Case Eval", value: "57% T1 · 74% T5 · 0.642 MRR" },
+      { label: "Clarifier Loop", value: "< 20 ms Shannon IG" },
+      { label: "Citation Audit", value: "100% Verified (0 Fake IDs)" },
     ],
     bullets: [
-      "Grounds unstructured clinical notes and negated findings to standardized HPO IDs via Neo4j Lucene fulltext search.",
-      "Traverses 12,880 Disease nodes and 285,334 HAS_PHENOTYPE associations in Neo4j with Information Content (IC) weighted scoring and contradiction penalties.",
-      "Orchestrates 6 parallel domain specialists (Neurology, Genetics, Metabolic, Musculoskeletal, Cardiology, Sensory) followed by an Adversarial Reviewer and CMO synthesis.",
-      "Streams stage-by-stage updates via FastAPI SSE into an interactive 3-tier knowledge graph (Phenotypes → Diseases → Genes) with pan/zoom inspection.",
+      "Unified 6 biomedical sources (`hp.obo`, `phenotype.hpoa`, Orphanet XMLs, `genes_to_disease`) into Neo4j + `.ontology_cache_v2.pkl` covering 12,883 diseases, 19,894 HPO terms, `IS_A*` closures, frequency tiers & age-of-onset priors.",
+      "Engineered Resnik MICA semantic hierarchy matching + Orphanet Bayesian LR+ / LR− log-odds inference (`+0.65` / `−1.85` onset weights), lifting 100-case GA4GH Phenopacket Top-1 recall from 16% (V1 overlap) to 57.0% (74.0% Top-5, 0.642 MRR).",
+      "Built a zero-LLM NumPy Shannon Information-Gain clarifier (`POST /v1/clarify`, `< 30 ms` round-trip) surfacing Top-3 bedside Yes/No questions plus a 3-tier Cost-vs-Yield lab & WES/WGS roadmap.",
+      "Orchestrated 6 parallel LangGraph specialists across a 6-model Groq + NVIDIA NIM failover pool with deterministic fallback, max-1 divergence rebuttal gate & live NCBI/Neo4j ID verifier (100% verified citations).",
     ],
     architecture: {
       steps: [
-        { title: "Phenotype Extractor", detail: "Parses positive & absent HPO terms from notes" },
-        { title: "Neo4j GraphRAG", detail: "285k+ HPO edges & IC-weighted overlap score" },
-        { title: "6-Specialist Panel", detail: "Parallel clinical stances + Red-Team challenge" },
-        { title: "CMO Arbiter & UI", detail: "Calibrated differential streamed over FastAPI SSE" },
+        { title: "HPO + Onset Grounder", detail: "Extracts positive/absent HPOs, age-of-onset & Phenopacket v2 JSON" },
+        { title: "MICA + Bayesian Engine", detail: "12,883 diseases · IS_A* MICA + Orphanet LR+ / LR− & Shannon IG" },
+        { title: "6-Specialist + Critic", detail: "Groq/NIM 6-model pool + max-1 rebuttal + 100% ID verifier" },
+        { title: "3-Zone Clinical UI", detail: "Live <30ms Clarifier, T1/T2/T3 Labs, 3-Tier Graph & Benchmarks" },
       ],
     },
     deepDive: {
       challenge:
-        "Rare disease patients face years of diagnostic delay because symptoms span multiple organ systems, and generic single-prompt LLMs suffer from premature closure or miss absent/negated clinical findings.",
+        "Standard medical LLM prompts hallucinate gene–syndrome links and PMIDs, miss excluded findings ('no seizures'), and score 0 when patient symptoms are more specific than a disease's parent HPO annotation—leading to 16% Top-1 accuracy on naive overlap.",
       solution:
-        "Emulated a real Rare Disease Diagnostic Board using LangGraph: grounded clinical notes to HPO terms in Neo4j, scored 285k+ phenotype edges via Information Content, ran 6 parallel specialist agents, and subjected candidates to an Adversarial Red-Team Reviewer before final CMO calibration.",
+        "Built Odyssey-Dx V2 by decoupling biomedical probability math from multi-agent reasoning: precomputed `IS_A*` MICA closures + Orphanet frequency Bayesian LR+ / LR− (`65%` composite weight) shortlist Top-10 candidates, vectorized Shannon IG drives `< 30 ms` clarifying questions, and a 6-specialist LangGraph board undergoes deterministic NCBI + Neo4j ID auditing.",
       decisions: [
         {
-          title: "Negated Phenotype Penalty Modeling",
-          detail: "Extractor isolates ruled-out findings (e.g., 'No seizures') and penalizes candidates whose hallmark symptoms contradict the chart.",
+          title: "Resnik MICA over IS_A* Ancestor Closures",
+          detail: "Pools diseases via informative ancestors (IC >= 0.8) and scores child-to-parent matches proportionally, jumping Top-1 recall from 16% (V1) to 57% (100 GA4GH Phenopackets).",
         },
         {
-          title: "IC-Weighted Neo4j Graph Traversal",
-          detail: "Rare specific phenotypes carry higher Information Content (IC) weight than common non-specific signs across 285,334 HAS_PHENOTYPE edges.",
+          title: "Orphanet Frequency Bayesian LR+ / LR−",
+          detail: "Replaces fixed penalties with calibrated prevalence tiers (Obligate 0.99 to Excluded 0.01), absent-finding LR− demotions, and +0.65/−1.85 age-of-onset adjustments.",
         },
         {
-          title: "Calibrated Composite CMO Formula",
-          detail: "Combines structural ontology evidence with specialist consensus: Score = 0.7 × Graph + 0.3 × Panel − Red-Team Penalty.",
+          title: "Vectorized Zero-LLM Shannon IG Clarifier",
+          detail: "Single NumPy pass over Top-10 candidates ranks unasked distinguishing signs in < 20 ms (`POST /v1/clarify`) to update posteriors & graphs without LLM wait.",
         },
         {
-          title: "Interactive 3-Tier Graph Inspector",
-          detail: "Renders Phenotypes → Diseases → Causative Genes with pan/drag, manual zoom buttons (no scroll-hijacking), and node metadata drawers.",
+          title: "Deterministic ID Audit & CMO Composite",
+          detail: "Validates every HP:/ORPHA:/OMIM:/PMID: token (`100%` verified) with max-1 divergence rebuttal and blends `0.65 × Graph + 0.35 × Panel − 0.08 × Objections`.",
         },
       ],
       specs: [
-        { label: "Ontology Scale", value: "12,880 Diseases · 285,334 HPO links" },
-        { label: "Specialist Panel", value: "Neuro · Genetics · Metabolic · MSK · Cardio · Sensory" },
-        { label: "Search Engine", value: "Neo4j Lucene fulltext + Cypher IC queries" },
-        { label: "Streaming API", value: "FastAPI SSE (/v1/diagnose/stream)" },
-        { label: "Data Sources", value: "Human Phenotype Ontology (hp.obo) + Orphanet XML" },
-        { label: "Advisory Scope", value: "Investigational clinical decision support prototype" },
+        { label: "Ontology Store", value: "12,883 Diseases · 19,894 HPO Terms · IS_A* Closures" },
+        { label: "100-Case Benchmark", value: "57.0% T1 · 71.0% T3 · 74.0% T5 · 0.642 MRR" },
+        { label: "Clarifier Endpoint", value: "POST /v1/clarify (< 30 ms · Zero-LLM NumPy IG)" },
+        { label: "Agent Failover Pool", value: "6 Groq & NVIDIA NIM Models + Offline Fallback" },
+        { label: "Citation Guardrail", value: "100.0% Verified IDs (Neo4j + NCBI esummary.fcgi)" },
+        { label: "Tests & Interop", value: "6/6 pytest + GA4GH Phenopacket v2 Import/Export" },
       ],
     },
-    liveUrl: "https://claude-group-2.vercel.app",
-    githubUrl: "https://github.com/BhanuNama/Claude-Group-2",
+    liveUrl: "https://odyssey-solver-rare-disease.vercel.app",
+    githubUrl: "https://github.com/BhanuNama/Odyssey-Solver-rare-disease",
   },
   {
     id: "genome-guide",
@@ -525,83 +525,8 @@ export const PROJECTS: ProjectItem[] = [
     githubUrl: "https://github.com/BhanuNama/contentforge-ai",
   },
   {
-    id: "show-time",
-    fig: "FIG. 07",
-    repoName: "BhanuNama/Show-Time-Backend",
-    title: "Show Time",
-    subtitle: "Full-Stack Movie & Event Booking Platform",
-    category: "Full-Stack",
-    year: "2025",
-    tagline: "JWT + Firebase RBAC booking engine with live seats, QR passes & owner analytics.",
-    summary:
-      "Production-deployed movie and live event ticket booking platform combining interactive Silver/Gold/VIP seat maps, downloadable QR passes, TMDB live sync, and a role-protected owner analytics dashboard.",
-    tools: [
-      "React 19",
-      "Spring Boot 3.5",
-      "Java 17",
-      "MySQL 8",
-      "Firebase",
-      "Spring Security",
-      "Tailwind CSS",
-      "TMDB API",
-    ],
-    metrics: [
-      { label: "Booking Flows", value: "Movies + Events" },
-      { label: "Auth & RBAC", value: "JWT + BCrypt + Firebase" },
-      { label: "Ticketing", value: "Live Seat Lock + QR" },
-    ],
-    bullets: [
-      "Built full-stack movie booking app with React, Spring Boot, and MySQL featuring JWT authentication, live seat tracking, and public/downloadable QR tickets.",
-      "Developed dual booking flows (movies with A–M tiered seats & events with custom zones), wishlist sync, real-time availability, and an owner analytics dashboard.",
-      "Secured REST APIs with Spring Security, BCrypt, and role-based access control alongside TMDB v3 integration for live posters and show search.",
-      "Designed responsive UI with Tailwind CSS, Framer Motion transitions, Firebase Auth, and HTML-to-image PNG ticket downloads.",
-    ],
-    architecture: {
-      steps: [
-        { title: "React 19 + Framer UI", detail: "Movie/event discovery, A–M seat map & QR pass" },
-        { title: "Spring Security + JWT", detail: "Stateless JJWT filter, BCrypt & Firebase Auth" },
-        { title: "Spring Boot REST Core", detail: "Seat/zone locks, owner analytics & TMDB sync" },
-        { title: "MySQL 8 Persistence", detail: "Spring Data JPA/Hibernate transactional bookings" },
-      ],
-    },
-    deepDive: {
-      challenge:
-        "Entertainment booking platforms must prevent double-booking seats concurrently, separate customer flows from venue owner scheduling/analytics, and verify QR tickets publicly at doors without requiring login.",
-      solution:
-        "Engineered a Spring Boot 3.5 REST API + MySQL 8 schema with server-side seat/zone validation, JJWT + Spring Security RBAC, public `/ticket/:id` QR pass endpoints, and a Framer Motion React SPA.",
-      decisions: [
-        {
-          title: "Dual Booking State Machine (Movies & Events)",
-          detail: "Supports seat-row matrices (Silver/Gold/VIP) for cinema shows and zone quantity allocation for multi-tier live events.",
-        },
-        {
-          title: "Hybrid Auth (Firebase + Spring JJWT)",
-          detail: "Supports email/password, Google sign-in, email link, and Twilio OTP backed by stateless Spring Security JWT verification.",
-        },
-        {
-          title: "Public Door-Scan QR Passes",
-          detail: "Generates qrcode.react passes exportable as PNG via html-to-image with unauthenticated verification routes for door scanning.",
-        },
-        {
-          title: "Role-Gated Owner Operations Console",
-          detail: "Lets venue owners manage theatres, schedules, event zones, booking lookups, and revenue analytics safely behind RBAC.",
-        },
-      ],
-      specs: [
-        { label: "Frontend", value: "React 19 · Vite 7 · Tailwind · Framer Motion" },
-        { label: "Backend Core", value: "Java 17 · Spring Boot 3.5 · Spring Security · JJWT" },
-        { label: "Database", value: "MySQL 8 + Spring Data JPA / Hibernate 6" },
-        { label: "Integrations", value: "TMDB v3 · Firebase Auth · Twilio OTP" },
-        { label: "Ticketing", value: "qrcode.react + html-to-image PNG export" },
-        { label: "Deployment", value: "Vercel Frontend + Railway Spring Boot & MySQL" },
-      ],
-    },
-    liveUrl: "https://its-show-time.vercel.app",
-    githubUrl: "https://github.com/BhanuNama/Show-Time-Backend",
-  },
-  {
     id: "ai-research-assistant",
-    fig: "FIG. 08",
+    fig: "FIG. 07",
     repoName: "bhanu0803/AI-research-assistant",
     title: "AI Research Assistant",
     subtitle: "Privacy-First Local Multi-Agent & RAG System",
@@ -674,75 +599,6 @@ export const PROJECTS: ProjectItem[] = [
     liveUrl: "https://huggingface.co/spaces/bhanu0803/AI-research-assistant",
     githubUrl: "https://huggingface.co/spaces/bhanu0803/AI-research-assistant/tree/main",
   },
-  {
-    id: "nutri-guide",
-    fig: "FIG. 09",
-    repoName: "BhanuNama/Nutri-Guide",
-    title: "Nutri Guide",
-    subtitle: "AI-Powered Nutrition & Macro Analytics Platform",
-    category: "Full-Stack AI",
-    year: "2024",
-    tagline: "Gemini API meal planning, dynamic macro breakdowns & Chart.js telemetry.",
-    summary:
-      "Full-stack AI nutrition web application that transforms natural language dietary goals via Gemini API into personalized daily meal schedules, macro distribution dashboards, and persisted progress plans.",
-    tools: [
-      "ReactJS",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Gemini API",
-      "Chart.js",
-      "Tailwind CSS",
-      "JWT",
-    ],
-    metrics: [
-      { label: "AI Planner", value: "Gemini NLU" },
-      { label: "Telemetry", value: "Macro Chart.js" },
-      { label: "Persistence", value: "JWT + MongoDB" },
-    ],
-    bullets: [
-      "Engineered NutriGuide, a full-stack AI web app generating personalized meal plans using Gemini API for natural language dietary understanding.",
-      "Implemented dynamic daily meal scheduling with protein/carb/fat macro breakdowns and interactive visual analytics via Chart.js.",
-      "Developed JWT-based authentication and user profile management in Node.js + MongoDB for secure access and persistent nutrition tracking.",
-    ],
-    architecture: {
-      steps: [
-        { title: "React + Tailwind UI", detail: "Goal onboarding, meal planner & schedule views" },
-        { title: "Gemini NLU Engine", detail: "Goal & preference synthesis into meal schedules" },
-        { title: "Node + Express + JWT", detail: "Authenticated profiles & plan CRUD routes" },
-        { title: "MongoDB + Chart.js", detail: "Persistent plan storage & macro analytics charts" },
-      ],
-    },
-    deepDive: {
-      challenge:
-        "Static diet charts ignore regional preferences, caloric targets, and changing schedules, making nutrition consistency hard to track over time.",
-      solution:
-        "Built a MERN stack planner powered by Gemini API natural language synthesis that outputs structured multi-slot meal schedules paired with visual Chart.js macro breakdowns and saved user history.",
-      decisions: [
-        {
-          title: "Goal-Driven Gemini Meal Synthesis",
-          detail: "Translates dietary constraints, calorie targets, and food preferences into structured AM/PM/Evening meal plans.",
-        },
-        {
-          title: "Interactive Chart.js Macro Breakdown",
-          detail: "Visualizes calorie adherence and protein/carb/fat ratios cleanly across daily schedules.",
-        },
-        {
-          title: "JWT Auth & MongoDB Persistence",
-          detail: "Persists personalized profiles, generated plans, and nutrition targets per user in MongoDB.",
-        },
-      ],
-      specs: [
-        { label: "Frontend", value: "ReactJS · Tailwind CSS · Chart.js" },
-        { label: "AI Layer", value: "Google Gemini API (Natural Language Planning)" },
-        { label: "Backend API", value: "Node.js · Express · JWT Authentication" },
-        { label: "Database", value: "MongoDB User Profiles & Meal History" },
-        { label: "Hosting", value: "Vercel Web App" },
-      ],
-    },
-    liveUrl: "https://neutri-guide.vercel.app",
-    githubUrl: "https://github.com/BhanuNama/Nutri-Guide",
-  },
 ];
 
 export const SKILL_GROUPS: SkillGroup[] = [
@@ -754,7 +610,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
       {
         name: "JavaScript",
         role: "Full-stack runtime across React SPAs, Express/Node workers & WebRTC engines.",
-        relatedProjects: ["the-orbit", "odyssey-solver", "genome-guide", "fluent-path", "nutri-guide"],
+        relatedProjects: ["the-orbit", "odyssey-solver", "genome-guide", "fluent-path"],
       },
       {
         name: "Python",
@@ -763,8 +619,8 @@ export const SKILL_GROUPS: SkillGroup[] = [
       },
       {
         name: "Java",
-        role: "Strongly-typed Spring Boot 3.5 REST APIs, Spring Security JWT & JPA/Hibernate.",
-        relatedProjects: ["show-time"],
+        role: "Strongly-typed object-oriented backend systems, REST APIs & production server tooling.",
+        relatedProjects: [],
       },
     ],
   },
@@ -780,13 +636,13 @@ export const SKILL_GROUPS: SkillGroup[] = [
       },
       {
         name: "React 19",
-        role: "Real-time P2P stage UIs, interactive seat matrices, Three.js & Framer Motion.",
-        relatedProjects: ["the-orbit", "genome-guide", "contentforge-ai", "odyssey-solver", "fluent-path", "show-time", "ai-research-assistant", "nutri-guide"],
+        role: "Real-time P2P stage UIs, interactive clinical graphs, Three.js & Framer Motion.",
+        relatedProjects: ["the-orbit", "genome-guide", "contentforge-ai", "odyssey-solver", "fluent-path", "ai-research-assistant"],
       },
       {
         name: "Spring Boot & Express",
-        role: "Spring Boot + Spring Security REST services and FastAPI / Fastify / Express APIs.",
-        relatedProjects: ["show-time", "the-orbit", "odyssey-solver", "genome-guide", "fluent-path", "ai-research-assistant", "nutri-guide"],
+        role: "FastAPI / Fastify / Express REST & SSE services alongside Spring Boot backend foundations.",
+        relatedProjects: ["the-orbit", "odyssey-solver", "genome-guide", "fluent-path", "ai-research-assistant"],
       },
       {
         name: "WebRTC / LiveKit",
@@ -796,7 +652,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
       {
         name: "Tailwind CSS",
         role: "Zero-runtime utility design systems with responsive dark/light tokens.",
-        relatedProjects: ["the-orbit", "meetmind-ai", "contentforge-ai", "fluent-path", "show-time", "ai-research-assistant", "nutri-guide"],
+        relatedProjects: ["the-orbit", "meetmind-ai", "contentforge-ai", "fluent-path", "ai-research-assistant"],
       },
     ],
   },
@@ -812,12 +668,12 @@ export const SKILL_GROUPS: SkillGroup[] = [
       },
       {
         name: "Groq, Ollama & Gemini",
-        role: "LLaMA 3.3 / Whisper v3 cloud inference, local Ollama LLaMA 3.2 & Gemini NLU planning.",
-        relatedProjects: ["fluent-path", "meetmind-ai", "contentforge-ai", "genome-guide", "ai-research-assistant", "nutri-guide"],
+        role: "LLaMA 3.3 / Whisper v3 cloud inference & local privacy-first Ollama LLaMA 3.2 runtimes.",
+        relatedProjects: ["fluent-path", "meetmind-ai", "contentforge-ai", "genome-guide", "ai-research-assistant"],
       },
       {
         name: "Dual-RAG & GraphRAG",
-        role: "IC-weighted Neo4j traversal + ClinVar/gnomAD, pgvector & local ChromaDB top-5 RAG.",
+        role: "Resnik MICA + Bayesian Neo4j GraphRAG, ClinVar/gnomAD, pgvector & ChromaDB RAG.",
         relatedProjects: ["odyssey-solver", "genome-guide", "meetmind-ai", "ai-research-assistant"],
       },
       {
@@ -839,18 +695,18 @@ export const SKILL_GROUPS: SkillGroup[] = [
       },
       {
         name: "Neo4j & ChromaDB",
-        role: "285k+ biomedical ontology graph in Neo4j & persistent local ChromaDB vectors.",
+        role: "12.8k-disease / 19.8k-HPO ontology graph in Neo4j & persistent local ChromaDB vectors.",
         relatedProjects: ["odyssey-solver", "ai-research-assistant"],
       },
       {
         name: "MySQL & MongoDB",
-        role: "Transactional MySQL 8 bookings (Hibernate) & MongoDB registries / test banks.",
-        relatedProjects: ["show-time", "the-orbit", "fluent-path", "nutri-guide"],
+        role: "MongoDB registries & unseen test banks alongside relational SQL / PostgreSQL data modeling.",
+        relatedProjects: ["the-orbit", "fluent-path"],
       },
       {
         name: "Clerk & JWT",
-        role: "Svix webhook auth, Next.js user isolation & stateless Spring Security JWT RBAC.",
-        relatedProjects: ["show-time", "meetmind-ai", "contentforge-ai", "nutri-guide"],
+        role: "Svix webhook auth, Next.js user isolation & stateless HMAC / JWT verification.",
+        relatedProjects: ["meetmind-ai", "contentforge-ai", "fluent-path"],
       },
     ],
   },
@@ -861,8 +717,8 @@ export const SKILL_GROUPS: SkillGroup[] = [
     items: [
       {
         name: "Vercel & Railway",
-        role: "Production frontend edge deployments paired with Railway Spring Boot & FastAPI services.",
-        relatedProjects: ["the-orbit", "odyssey-solver", "genome-guide", "fluent-path", "meetmind-ai", "contentforge-ai", "show-time", "nutri-guide"],
+        role: "Production frontend edge deployments paired with Railway FastAPI & Node services.",
+        relatedProjects: ["the-orbit", "odyssey-solver", "genome-guide", "fluent-path", "meetmind-ai", "contentforge-ai"],
       },
       {
         name: "Docker & HuggingFace",
@@ -872,7 +728,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
       {
         name: "Git & PostMan",
         role: "Monorepo release workflows, API contract verification & SSE testing.",
-        relatedProjects: ["the-orbit", "odyssey-solver", "genome-guide", "fluent-path", "meetmind-ai", "contentforge-ai", "show-time", "ai-research-assistant", "nutri-guide"],
+        relatedProjects: ["the-orbit", "odyssey-solver", "genome-guide", "fluent-path", "meetmind-ai", "contentforge-ai", "ai-research-assistant"],
       },
     ],
   },

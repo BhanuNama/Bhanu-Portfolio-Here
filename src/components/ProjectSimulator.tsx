@@ -17,13 +17,13 @@ export function ProjectSimulator({ projectId }: { projectId: string }) {
     music: "Bit-exact .flac/.wav via 'orbit-music' DataChannel + synced .lrc lyrics",
   };
 
-  // Odyssey Solver
-  const [odysseyNode, setOdysseyNode] = useState<"neuro" | "gen" | "critic" | "cmo">("cmo");
+  // Odyssey-Dx V2
+  const [odysseyNode, setOdysseyNode] = useState<"mica" | "ig" | "critic" | "cmo">("cmo");
   const odysseyData = {
-    neuro: "Neurology: Progressive proximal weakness + elevated CK → supports muscular dystrophy (0.89)",
-    gen: "Genetics: X-linked maternal uncle history + calf pseudohypertrophy → DMD locus match (0.94)",
-    critic: "Red Team: Verified sensorineural hearing loss nuance; flagged confirmatory dystrophin panel",
-    cmo: "CMO Consensus: 0.7 × Graph(0.92) + 0.3 × Panel(0.91) → Ranked #1 + WES/CK test roadmap",
+    mica: "Alg 1 & 2: IS_A* MICA closures + Orphanet Bayesian LR+ / LR− across 12,883 diseases & onset windows (+0.65 / −1.85)",
+    ig: "Alg 3 (<20ms): Vectorized NumPy Shannon IG splitter ranks Top-3 distinguishing Yes/No questions via POST /v1/clarify",
+    critic: "Alg 4: 6-Specialist Groq/NIM pool + max-1 divergence rebuttal + NCBI/Neo4j ID verifier (100% verified · 0 fake IDs)",
+    cmo: "100-Case Eval: 0.65×Graph + 0.35×Panel − 0.08×Obj → 57.0% Top-1 · 71.0% Top-3 · 74.0% Top-5 · 0.642 MRR",
   };
 
   // GenomeGuide
@@ -62,27 +62,12 @@ export function ProjectSimulator({ projectId }: { projectId: string }) {
   const [forgeStep, setForgeStep] = useState<number>(4);
   const [forging, setForging] = useState(false);
 
-  // Show Time
-  const [bookingMode, setBookingMode] = useState<"movies" | "events">("movies");
-  const bookingData = {
-    movies: "Movies Flow: Theatre → Date → A–M Seat Tier Lock (MySQL) → JJWT Verified Pass → Public QR PNG",
-    events: "Events Flow: Venue Zone Allocation → Firebase / OTP Auth → Transaction Guard → Instant Door QR",
-  };
-
   // AI Research Assistant
   const [crewStage, setCrewStage] = useState<"researcher" | "analyst" | "writer">("researcher");
   const crewData = {
     researcher: "Researcher Agent: Runs DuckDuckGo web search + ChromaDB 768-dim top-5 local RAG cosine lookup",
     analyst: "Analyst Agent: Synthesizes multi-document citations via Ollama llama3.2:1b zero-cloud runtime",
     writer: "Writer Agent: Compiles structured Markdown research report with verified [Source: filename] links",
-  };
-
-  // Nutri Guide
-  const [mealSlot, setMealSlot] = useState<"AM" | "PM" | "EVE">("AM");
-  const mealData = {
-    AM: "AM Plan (540 kcal): Gemini NLU balances 36% Protein · 44% Complex Carbs · 20% Fats → MongoDB saved",
-    PM: "PM Plan (690 kcal): Dynamic Chart.js macro split adjusted to 42% P · 38% C · 20% F per JWT profile",
-    EVE: "EVE Plan (610 kcal): Light recovery schedule (46% P · 28% C · 26% F) synced to daily calorie budget",
   };
   const replayForge = () => {
     if (forging) return;
@@ -136,15 +121,15 @@ export function ProjectSimulator({ projectId }: { projectId: string }) {
       <div className="rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">
-            Specialist Debate Board Inspector
+            Odyssey-Dx V2 Engine Inspector
           </span>
           <div className="flex flex-wrap gap-1.5">
             {(
               [
-                ["neuro", "Neurology"],
-                ["gen", "Genetics"],
-                ["critic", "Red Team"],
-                ["cmo", "CMO"],
+                ["mica", "MICA + Bayes"],
+                ["ig", "Shannon IG"],
+                ["critic", "Citation Guard"],
+                ["cmo", "100-Case Eval"],
               ] as const
             ).map(([key, label]) => (
               <button
@@ -303,40 +288,6 @@ export function ProjectSimulator({ projectId }: { projectId: string }) {
     );
   }
 
-  if (projectId === "show-time") {
-    return (
-      <div className="rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">
-            Booking State &amp; QR Lock Simulator
-          </span>
-          <div className="flex gap-1.5">
-            {(["movies", "events"] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => {
-                  paperSound.playClick();
-                  setBookingMode(m);
-                }}
-                className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase ${
-                  bookingMode === m
-                    ? "bg-[var(--ink-primary)] text-[var(--bg-paper)]"
-                    : "border border-[var(--border-hairline)] bg-[var(--bg-card)] text-[var(--ink-secondary)]"
-                }`}
-              >
-                {m}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="mt-3 rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-3 font-mono text-[11px] leading-relaxed text-[var(--ink-primary)]">
-          {bookingData[bookingMode]}
-        </div>
-      </div>
-    );
-  }
-
   if (projectId === "ai-research-assistant") {
     return (
       <div className="rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4">
@@ -366,40 +317,6 @@ export function ProjectSimulator({ projectId }: { projectId: string }) {
         </div>
         <div className="mt-3 rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-3 font-mono text-[11px] leading-relaxed text-[var(--ink-primary)]">
           {crewData[crewStage]}
-        </div>
-      </div>
-    );
-  }
-
-  if (projectId === "nutri-guide") {
-    return (
-      <div className="rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">
-            Gemini Macro Schedule Telemetry
-          </span>
-          <div className="flex gap-1.5">
-            {(["AM", "PM", "EVE"] as const).map((slotKey) => (
-              <button
-                key={slotKey}
-                type="button"
-                onClick={() => {
-                  paperSound.playClick();
-                  setMealSlot(slotKey);
-                }}
-                className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] ${
-                  mealSlot === slotKey
-                    ? "bg-[var(--ink-primary)] text-[var(--bg-paper)]"
-                    : "border border-[var(--border-hairline)] bg-[var(--bg-card)] text-[var(--ink-secondary)]"
-                }`}
-              >
-                {slotKey}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="mt-3 rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-3 font-mono text-[11px] leading-relaxed text-[var(--ink-primary)]">
-          {mealData[mealSlot]}
         </div>
       </div>
     );

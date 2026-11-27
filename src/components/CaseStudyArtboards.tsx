@@ -13,8 +13,6 @@ import {
   ShieldCheck,
   Sliders,
   Sparkles,
-  Ticket,
-  Activity,
 } from "lucide-react";
 import { paperSound } from "@/lib/paperSound";
 
@@ -35,12 +33,8 @@ export function CaseStudyArtboard({ projectId }: { projectId: string }) {
       return <MeetMindCaseArtboard />;
     case "contentforge-ai":
       return <ContentForgeCaseArtboard />;
-    case "show-time":
-      return <ShowTimeCaseArtboard />;
     case "ai-research-assistant":
       return <ResearchCaseArtboard />;
-    case "nutri-guide":
-      return <NutriGuideCaseArtboard />;
     default:
       return null;
   }
@@ -321,24 +315,25 @@ function OrbitCaseArtboard() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 2. ODYSSEY SOLVER (Claude-Group-2)                                         */
+/* 2. ODYSSEY-DX V2 (Odyssey-Solver-rare-disease)                             */
 /* -------------------------------------------------------------------------- */
 function OdysseyCaseArtboard() {
   const [selectedPheno, setSelectedPheno] = useState<number>(0);
+  const [ckCheck, setCkCheck] = useState<"unknown" | "yes" | "no">("unknown");
 
   const phenotypes = [
-    { id: "HP:0003236", label: "Markedly Elevated CK", disease: "Duchenne Muscular Dystrophy", gene: "DMD (Xp21)", score: "0.94" },
-    { id: "HP:0003707", label: "Calf Pseudohypertrophy", disease: "Becker Muscular Dystrophy", gene: "DMD (Xp21)", score: "0.91" },
-    { id: "HP:0000407", label: "Sensorineural Hearing Loss", disease: "Mitochondrial Myopathy", gene: "MT-TL1", score: "0.78" },
+    { id: "HP:0003236", label: "Markedly Elevated CK", disease: "Duchenne Muscular Dystrophy", gene: "DMD (Xp21)", posterior: ckCheck === "yes" ? "87.4%" : ckCheck === "no" ? "21.8%" : "68.2%" },
+    { id: "HP:0003707", label: "Calf Pseudohypertrophy", disease: "Becker Muscular Dystrophy", gene: "DMD (Xp21)", posterior: ckCheck === "yes" ? "79.1%" : "61.5%" },
+    { id: "HP:0000407", label: "Sensorineural Hearing Loss", disease: "Mitochondrial Myopathy", gene: "MT-TL1", posterior: ckCheck === "no" ? "58.9%" : "44.0%" },
   ];
 
   const specialists = [
-    { name: "Neurology", conf: 92, stance: "Supports DMD" },
-    { name: "Genetics", conf: 95, stance: "X-Linked Maternal" },
-    { name: "Metabolic", conf: 68, stance: "Rule out Pompe" },
-    { name: "Musculoskeletal", conf: 89, stance: "Proximal Weakness" },
-    { name: "Cardiology", conf: 74, stance: "Monitor Echo" },
-    { name: "Sensory", conf: 64, stance: "Flag Hearing Nuance" },
+    { name: "Neurology", conf: 92, stance: "Supports DMD · Verified HP:" },
+    { name: "Genetics", conf: 95, stance: "X-Linked DMD · T2 Panel" },
+    { name: "Metabolic", conf: 68, stance: "Rule out Pompe (GAA)" },
+    { name: "Musculoskeletal", conf: 89, stance: "Proximal + Gowers Sign" },
+    { name: "Cardiology", conf: 74, stance: "Echo Dystrophinopathy" },
+    { name: "Sensory", conf: 64, stance: "Onset Window Fit (+0.65)" },
   ];
 
   const activeP = phenotypes[selectedPheno];
@@ -348,10 +343,10 @@ function OdysseyCaseArtboard() {
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-hairline)] pb-4">
         <div className="flex items-center gap-2 font-mono text-xs text-[var(--ink-primary)]">
           <GitBranch className="h-4 w-4 text-[var(--accent)]" />
-          <span className="font-semibold">NEO4J GRAPHRAG · 285,334 HPO ASSOCIATIONS</span>
+          <span className="font-semibold">ODYSSEY-DX V2 · MICA + BAYESIAN LR (12,883 DISEASES · 19,894 HPO)</span>
         </div>
         <span className="rounded-full border border-[var(--border-hairline)] bg-[var(--bg-paper)] px-3 py-1 font-mono text-[10px] text-[var(--accent)]">
-          CMO: 0.7×Graph + 0.3×Panel − Penalty
+          0.65×Graph + 0.35×Panel − 0.08×Obj · 74% T5 Recall
         </span>
       </div>
 
@@ -427,7 +422,7 @@ function OdysseyCaseArtboard() {
               </div>
 
               <motion.div
-                key={activeP.disease}
+                key={`${activeP.disease}-${ckCheck}`}
                 initial={{ scale: 0.96, opacity: 0.6 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className="rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)] p-4 text-center"
@@ -439,7 +434,7 @@ function OdysseyCaseArtboard() {
                   {activeP.disease}
                 </div>
                 <div className="mt-2 font-mono text-xs font-semibold text-[var(--accent)]">
-                  IC Score: {activeP.score}
+                  Bayesian Posterior: {activeP.posterior}
                 </div>
               </motion.div>
 
@@ -456,9 +451,35 @@ function OdysseyCaseArtboard() {
                   {activeP.gene}
                 </div>
                 <div className="mt-1 font-mono text-[9px] text-[var(--ink-secondary)]">
-                  Orphanet Linked
+                  100% ID Verified
                 </div>
               </motion.div>
+            </div>
+
+            {/* Live <20ms Shannon IG Clarifier Mini-Loop */}
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--bg-card)] px-3.5 py-2.5 font-mono text-[10px]">
+              <span className="text-[var(--ink-secondary)]">
+                SHANNON IG CLARIFIER (&lt;20ms): <strong className="text-[var(--ink-primary)]">Confirm Serum CK &gt; 10k?</strong>
+              </span>
+              <div className="flex gap-1.5">
+                {(["yes", "no", "unknown"] as const).map((ans) => (
+                  <button
+                    key={ans}
+                    type="button"
+                    onClick={() => {
+                      paperSound.playClick();
+                      setCkCheck(ans);
+                    }}
+                    className={`rounded-full px-2.5 py-0.5 uppercase transition-colors ${
+                      ckCheck === ans
+                        ? "bg-[var(--accent)] text-white font-semibold"
+                        : "border border-[var(--border-hairline)] bg-[var(--bg-paper)] text-[var(--ink-muted)] hover:text-[var(--ink-primary)]"
+                    }`}
+                  >
+                    {ans === "unknown" ? "Reset" : ans}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -1172,151 +1193,7 @@ function ContentForgeCaseArtboard() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 7. SHOW TIME (Booking Seat Lock & QR Console)                              */
-/* -------------------------------------------------------------------------- */
-function ShowTimeCaseArtboard() {
-  const occupied = new Set(["0-2", "0-5", "1-1", "2-4", "2-5"]);
-  const [selected, setSelected] = useState<string[]>(["1-3", "1-4"]);
-  const [flow, setFlow] = useState<"movies" | "events">("movies");
-
-  const toggleSeat = (id: string) => {
-    if (occupied.has(id)) return;
-    paperSound.playClick();
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
-    );
-  };
-
-  return (
-    <div className="drafting-grid rounded-[28px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow-card)] sm:p-7">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-hairline)] pb-4">
-        <div className="flex items-center gap-2 font-mono text-xs text-[var(--ink-primary)]">
-          <Ticket className="h-4 w-4 text-[var(--accent)]" />
-          <span className="font-semibold">SHOW TIME · SPRING BOOT + QR SEAT LOCK</span>
-        </div>
-
-        <div className="flex gap-1.5">
-          {(["movies", "events"] as const).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => {
-                paperSound.playClick();
-                setFlow(tab);
-              }}
-              className={`rounded-full px-3 py-1 font-mono text-[11px] uppercase transition-colors ${
-                flow === tab
-                  ? "bg-[var(--accent)] text-white"
-                  : "border border-[var(--border-hairline)] bg-[var(--bg-paper)] text-[var(--ink-secondary)]"
-              }`}
-            >
-              {tab} Flow
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-6 grid gap-6 lg:grid-cols-12">
-        <div className="flex flex-col justify-between rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-5 lg:col-span-7">
-          <div className="flex flex-col items-center">
-            <svg viewBox="0 0 260 22" className="w-3/4 max-w-[260px]" aria-hidden="true">
-              <path
-                d="M10 18 Q130 2 250 18"
-                fill="none"
-                stroke="var(--ink-primary)"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--ink-muted)]">
-              {flow === "movies" ? "Auditorium 01 · Interactive Matrix" : "Live Arena · VIP / Gold Zones"}
-            </span>
-          </div>
-
-          <div className="my-5 mx-auto grid grid-cols-6 gap-1.5 sm:gap-2">
-            {[0, 1, 2].map((r) =>
-              [0, 1, 2, 3, 4, 5].map((c) => {
-                const id = `${r}-${c}`;
-                const isOcc = occupied.has(id);
-                const isSel = selected.includes(id);
-                return (
-                  <motion.button
-                    key={id}
-                    type="button"
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => toggleSeat(id)}
-                    className={`h-8 w-8 rounded-lg border font-mono text-[10px] font-semibold transition-all sm:w-10 ${
-                      isOcc
-                        ? "cursor-not-allowed border-[var(--border-strong)] bg-[var(--bg-well)] text-[var(--ink-muted)] opacity-55"
-                        : isSel
-                          ? "border-[var(--accent)] bg-[var(--accent)] text-white shadow-xs"
-                          : "border-[var(--border-hairline)] bg-[var(--bg-card)] text-[var(--ink-primary)] hover:border-[var(--ink-primary)]"
-                    }`}
-                  >
-                    {String.fromCharCode(65 + r)}
-                    {c + 1}
-                  </motion.button>
-                );
-              })
-            )}
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-[var(--ink-muted)]">
-            <span>MYSQL 8 · JPA LOCK</span>
-            <span className="text-[var(--accent)] font-semibold">
-              {selected.length} SEAT{selected.length === 1 ? "" : "S"} SELECTED
-            </span>
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-5 lg:col-span-5">
-          <div>
-            <div className="flex items-center justify-between font-mono text-[10px]">
-              <span className="font-semibold text-[var(--accent)]">PUBLIC /ticket/:id PASS</span>
-              <span className="text-[var(--ink-muted)]">JJWT · RBAC</span>
-            </div>
-            <div className="mt-2 text-lg font-bold text-[var(--ink-primary)]">
-              Door Verification Ticket
-            </div>
-            <p className="mt-1 text-xs leading-relaxed text-[var(--ink-secondary)]">
-              {flow === "movies"
-                ? "Seat row locks commit inside MySQL 8 via Spring Data JPA; PNG exportable QR links directly to the public verification endpoint."
-                : "Event zone allocations enforce real-time inventory caps alongside Firebase / Twilio OTP user verification."}
-            </p>
-          </div>
-
-          <div className="mt-5 flex items-center justify-between border-t border-dashed border-[var(--border-strong)] pt-4">
-            <div className="font-mono text-[11px] text-[var(--ink-primary)]">
-              <div>SEATS: {selected.length > 0 ? selected.join(", ") : "None"}</div>
-              <div className="mt-0.5 text-[10px] text-[var(--ink-muted)]">
-                TMDB v3 + Spring Security 6
-              </div>
-            </div>
-            <svg
-              viewBox="0 0 28 28"
-              className="h-12 w-12 rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-1.5 text-[var(--ink-primary)]"
-              aria-hidden="true"
-            >
-              <rect x="2" y="2" width="8" height="8" fill="currentColor" />
-              <rect x="4" y="4" width="4" height="4" fill="var(--bg-card)" />
-              <rect x="18" y="2" width="8" height="8" fill="currentColor" />
-              <rect x="20" y="4" width="4" height="4" fill="var(--bg-card)" />
-              <rect x="2" y="18" width="8" height="8" fill="currentColor" />
-              <rect x="4" y="20" width="4" height="4" fill="var(--bg-card)" />
-              <rect x="13" y="4" width="2" height="2" fill="currentColor" />
-              <rect x="12" y="15" width="4" height="2" fill="var(--accent)" />
-              <rect x="19" y="14" width="3" height="3" fill="currentColor" />
-              <rect x="14" y="21" width="5" height="5" fill="currentColor" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* 8. AI RESEARCH ASSISTANT (Local CrewAI + ChromaDB 768-dim)                 */
+/* 7. AI RESEARCH ASSISTANT (Local CrewAI + ChromaDB 768-dim)                 */
 /* -------------------------------------------------------------------------- */
 function ResearchCaseArtboard() {
   const [step, setStep] = useState(0);
@@ -1407,119 +1284,6 @@ function ResearchCaseArtboard() {
               <div className="text-[var(--ink-muted)]">RETRIEVAL</div>
               <div className="mt-0.5 font-semibold text-[var(--accent)]">Chroma Top-5</div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* 9. NUTRI GUIDE (Gemini Macro Analytics & Schedule Console)                 */
-/* -------------------------------------------------------------------------- */
-function NutriGuideCaseArtboard() {
-  const [slot, setSlot] = useState<"AM" | "PM" | "EVE">("AM");
-  const schedules = {
-    AM: { p: 36, c: 44, f: 20, kcal: 540, note: "High-protein oats + soaked almonds + fruit balanced for morning focus." },
-    PM: { p: 42, c: 38, f: 20, kcal: 690, note: "Lean lentil & paneer grain bowl calibrated by Gemini NLU for steady afternoon energy." },
-    EVE: { p: 46, c: 28, f: 26, kcal: 610, note: "Light recovery dinner with low glycemic load persisted to MongoDB profile." },
-  };
-  const current = schedules[slot];
-  const r = 46;
-  const circ = 2 * Math.PI * r;
-
-  return (
-    <div className="drafting-grid rounded-[28px] border border-[var(--border-hairline)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow-card)] sm:p-7">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-hairline)] pb-4">
-        <div className="flex items-center gap-2 font-mono text-xs text-[var(--ink-primary)]">
-          <Activity className="h-4 w-4 text-[var(--accent)]" />
-          <span className="font-semibold">NUTRI GUIDE · GEMINI NLU MACRO ENGINE</span>
-        </div>
-
-        <div className="flex gap-1.5">
-          {(["AM", "PM", "EVE"] as const).map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => {
-                paperSound.playClick();
-                setSlot(t);
-              }}
-              className={`rounded-full px-3 py-1 font-mono text-[11px] transition-colors ${
-                slot === t
-                  ? "bg-[var(--accent)] text-white"
-                  : "border border-[var(--border-hairline)] bg-[var(--bg-paper)] text-[var(--ink-secondary)]"
-              }`}
-            >
-              {t} SCHEDULE
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-6 grid gap-6 lg:grid-cols-12">
-        <div className="flex items-center gap-6 rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-5 lg:col-span-6">
-          <div className="relative flex h-28 w-28 shrink-0 items-center justify-center">
-            <svg viewBox="0 0 116 116" className="h-28 w-28 -rotate-90" aria-hidden="true">
-              <circle cx="58" cy="58" r={r} fill="none" stroke="var(--border-strong)" strokeWidth="8" />
-              <motion.circle
-                cx="58"
-                cy="58"
-                r={r}
-                fill="none"
-                stroke="var(--accent)"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={circ}
-                animate={{ strokeDashoffset: circ * (1 - current.p / 100) }}
-                transition={{ type: "spring", stiffness: 150, damping: 19 }}
-              />
-            </svg>
-            <div className="absolute text-center font-mono">
-              <div className="text-lg font-bold text-[var(--ink-primary)]">{current.p}%</div>
-              <div className="text-[9px] text-[var(--ink-muted)]">PROTEIN</div>
-            </div>
-          </div>
-
-          <div className="flex-1 space-y-2.5 font-mono text-xs">
-            {[
-              { label: "Protein", val: current.p },
-              { label: "Carbs", val: current.c },
-              { label: "Fats", val: current.f },
-            ].map((row) => (
-              <div key={row.label}>
-                <div className="flex justify-between text-[11px]">
-                  <span className="text-[var(--ink-secondary)]">{row.label}</span>
-                  <span className="font-semibold text-[var(--ink-primary)]">{row.val}%</span>
-                </div>
-                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-[var(--bg-well)]">
-                  <motion.div
-                    animate={{ width: `${row.val}%` }}
-                    transition={{ type: "spring", stiffness: 180, damping: 20 }}
-                    className="h-full rounded-full bg-[var(--accent)]"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-5 lg:col-span-6">
-          <div>
-            <div className="flex items-center justify-between font-mono text-[10px]">
-              <span className="font-semibold text-[var(--accent)]">MEAL SLOT: {slot}</span>
-              <span className="text-[var(--ink-muted)]">{current.kcal} kcal</span>
-            </div>
-            <div className="mt-2 text-lg font-bold text-[var(--ink-primary)]">
-              Chart.js Telemetry + MongoDB Plan
-            </div>
-            <p className="mt-2 text-xs leading-relaxed text-[var(--ink-secondary)]">
-              {current.note}
-            </p>
-          </div>
-          <div className="mt-4 flex items-center justify-between border-t border-dashed border-[var(--border-strong)] pt-3 font-mono text-[10px] text-[var(--ink-muted)]">
-            <span>JWT USER PROFILE</span>
-            <span className="font-semibold text-[var(--accent)]">GEMINI NLU SYNC</span>
           </div>
         </div>
       </div>

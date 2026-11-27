@@ -146,8 +146,8 @@ export function OrbitArtwork({ compact = false }: ArtworkProps) {
 }
 
 /**
- * FIG. 02 — Odyssey Solver (Claude-Group-2):
- * Interactive 3-Tier Knowledge Graph (Phenotypes -> Diseases -> Genes) + 6-Specialist Consensus
+ * FIG. 02 — Odyssey-Dx V2 (Odyssey-Solver-rare-disease):
+ * Resnik MICA + Bayesian LR across 12.8k Diseases & 19.8k HPO Terms + <20ms Shannon IG Clarifier
  */
 export function OdysseyArtwork({ compact = false }: ArtworkProps) {
   const [tier, setTier] = useState<number>(0);
@@ -157,7 +157,7 @@ export function OdysseyArtwork({ compact = false }: ArtworkProps) {
     return () => window.clearInterval(id);
   }, []);
 
-  const tiers = ["HPO Phenotypes", "12.8k Diseases", "Gene Network"];
+  const tiers = ["19.8k HPO", "12.8k Diseases", "Genes + MICA"];
 
   return (
     <div
@@ -167,10 +167,10 @@ export function OdysseyArtwork({ compact = false }: ArtworkProps) {
     >
       <div className="flex items-center justify-between">
         <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ink-muted)]">
-          Neo4j 285k Edges
+          MICA · Bayesian LR
         </span>
         <span className="rounded-full border border-[var(--border-hairline)] bg-[var(--bg-card)] px-2 py-0.5 font-mono text-[9px] font-semibold text-[var(--accent)]">
-          6× Debate
+          74% T5 · &lt;20ms IG
         </span>
       </div>
 
@@ -252,8 +252,8 @@ export function OdysseyArtwork({ compact = false }: ArtworkProps) {
             ))}
           </div>
           <div className="flex items-center justify-between font-mono text-[9px] text-[var(--ink-secondary)]">
-            <span>IC-Weighted + Red-Team Critic</span>
-            <span className="font-semibold text-[var(--accent)]">0.7G + 0.3P</span>
+            <span>Shannon IG + 100% ID Guard</span>
+            <span className="font-semibold text-[var(--accent)]">0.65G + 0.35P</span>
           </div>
         </div>
       )}
@@ -681,99 +681,7 @@ export function ContentForgeArtwork({ compact = false }: ArtworkProps) {
 }
 
 /**
- * FIG. 07 — Show Time: Interactive Cinema Seat Lock + QR Ticket
- */
-export function ShowTimeArtwork({ compact = false }: ArtworkProps) {
-  const initialOccupied = new Set(["0-2", "0-3", "1-4", "2-1", "2-2"]);
-  const [selected, setSelected] = useState<string[]>(["1-2", "1-3"]);
-
-  const toggleSeat = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (initialOccupied.has(id)) return;
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
-    );
-  };
-
-  return (
-    <div
-      className={`relative flex w-full flex-col justify-between overflow-hidden rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-well)]/80 ${
-        compact ? "p-3" : "p-4 sm:p-5"
-      }`}
-    >
-      <div className="mb-2 flex flex-col items-center">
-        <svg viewBox="0 0 180 18" className="w-3/4 max-w-[190px]" aria-hidden="true">
-          <path
-            d="M8 14 Q90 2 172 14"
-            fill="none"
-            stroke="var(--ink-muted)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-        </svg>
-        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--ink-muted)]">
-          Screen · Live Seat Lock
-        </span>
-      </div>
-
-      <div className="mx-auto grid grid-cols-6 gap-1.5 py-0.5">
-        {[0, 1, 2].map((row) =>
-          [0, 1, 2, 3, 4, 5].map((col) => {
-            const id = `${row}-${col}`;
-            const isOccupied = initialOccupied.has(id);
-            const isSel = selected.includes(id);
-            return (
-              <motion.button
-                key={id}
-                type="button"
-                whileTap={{ scale: 0.85 }}
-                onClick={(e) => toggleSeat(id, e)}
-                aria-label={`Seat ${row + 1}-${col + 1}`}
-                className={`h-4 w-5 rounded-[4px] border text-[8px] font-mono transition-colors sm:h-4.5 sm:w-6 ${
-                  isOccupied
-                    ? "cursor-not-allowed border-[var(--border-strong)] bg-[var(--ink-muted)]/25 opacity-50"
-                    : isSel
-                      ? "border-[var(--accent)] bg-[var(--accent)] text-white shadow-xs"
-                      : "border-[var(--border-strong)] bg-[var(--bg-card)] hover:border-[var(--ink-primary)]"
-                }`}
-              />
-            );
-          })
-        )}
-      </div>
-
-      {!compact && (
-        <div className="mt-3 flex items-center justify-between border-t border-dashed border-[var(--border-strong)] pt-2.5 font-mono text-[9px]">
-          <div>
-            <div className="font-semibold text-[var(--ink-primary)]">
-              QR PASS · {selected.length > 0 ? `${selected.length} SEATS` : "PICK SEATS"}
-            </div>
-            <div className="text-[var(--ink-muted)]">JWT · RBAC · TMDB</div>
-          </div>
-          <svg
-            viewBox="0 0 28 28"
-            className="h-7 w-7 rounded border border-[var(--border-hairline)] bg-[var(--bg-card)] p-1 text-[var(--ink-primary)]"
-            aria-hidden="true"
-          >
-            <rect x="2" y="2" width="8" height="8" fill="currentColor" />
-            <rect x="4" y="4" width="4" height="4" fill="var(--bg-card)" />
-            <rect x="18" y="2" width="8" height="8" fill="currentColor" />
-            <rect x="20" y="4" width="4" height="4" fill="var(--bg-card)" />
-            <rect x="2" y="18" width="8" height="8" fill="currentColor" />
-            <rect x="4" y="20" width="4" height="4" fill="var(--bg-card)" />
-            <rect x="13" y="4" width="2" height="2" fill="currentColor" />
-            <rect x="12" y="15" width="4" height="2" fill="var(--accent)" />
-            <rect x="19" y="14" width="3" height="3" fill="currentColor" />
-            <rect x="14" y="21" width="5" height="5" fill="currentColor" />
-          </svg>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * FIG. 08 — AI Research Assistant: 3-Agent CrewAI Circuit + ChromaDB 768-dim
+ * FIG. 07 — AI Research Assistant: 3-Agent CrewAI Circuit + ChromaDB 768-dim
  */
 export function ResearchAgentArtwork({ compact = false }: ArtworkProps) {
   const agents = ["Researcher", "Analyst", "Writer"];
@@ -826,106 +734,6 @@ export function ResearchAgentArtwork({ compact = false }: ArtworkProps) {
   );
 }
 
-/**
- * FIG. 09 — Nutri Guide: Interactive Macro Donut & Gemini Meal Planner
- */
-export function NutriGuideArtwork({ compact = false }: ArtworkProps) {
-  const [slot, setSlot] = useState<"AM" | "PM" | "EVE">("AM");
-  const presets = {
-    AM: { p: 36, c: 44, f: 20, kcal: "540 kcal" },
-    PM: { p: 42, c: 38, f: 20, kcal: "690 kcal" },
-    EVE: { p: 46, c: 28, f: 26, kcal: "610 kcal" },
-  };
-  const current = presets[slot];
-  const radius = 21;
-  const circ = 2 * Math.PI * radius;
-
-  return (
-    <div
-      className={`relative flex w-full flex-col justify-between overflow-hidden rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-well)]/80 ${
-        compact ? "p-3" : "p-4 sm:p-5"
-      }`}
-    >
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ink-muted)]">
-          Gemini Meal Plan
-        </span>
-        <div className="flex gap-1">
-          {(["AM", "PM", "EVE"] as const).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSlot(tab);
-              }}
-              className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] transition-colors ${
-                slot === tab
-                  ? "bg-[var(--ink-primary)] text-[var(--bg-paper)]"
-                  : "bg-[var(--bg-card)] text-[var(--ink-muted)] hover:text-[var(--ink-primary)]"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="my-2 flex items-center justify-between gap-3">
-        <div className="relative flex h-13 w-13 shrink-0 items-center justify-center">
-          <svg viewBox="0 0 54 54" className="h-13 w-13 -rotate-90" aria-hidden="true">
-            <circle
-              cx="27"
-              cy="27"
-              r={radius}
-              fill="none"
-              stroke="var(--border-strong)"
-              strokeWidth="4.5"
-            />
-            <motion.circle
-              cx="27"
-              cy="27"
-              r={radius}
-              fill="none"
-              stroke="var(--accent)"
-              strokeWidth="4.5"
-              strokeLinecap="round"
-              strokeDasharray={circ}
-              animate={{ strokeDashoffset: circ * (1 - current.p / 100) }}
-              transition={{ type: "spring", stiffness: 160, damping: 20 }}
-            />
-          </svg>
-          <span className="absolute font-mono text-[10px] font-semibold text-[var(--ink-primary)]">
-            {current.p}%
-          </span>
-        </div>
-
-        <div className="flex flex-1 flex-col gap-1 font-mono text-[9px]">
-          <div className="flex justify-between text-[var(--ink-secondary)]">
-            <span>Protein</span>
-            <span className="font-semibold text-[var(--ink-primary)]">{current.p}%</span>
-          </div>
-          <div className="flex justify-between text-[var(--ink-secondary)]">
-            <span>Carbs</span>
-            <span className="font-semibold text-[var(--ink-primary)]">{current.c}%</span>
-          </div>
-          <div className="flex justify-between text-[var(--ink-secondary)]">
-            <span>Fats</span>
-            <span className="font-semibold text-[var(--ink-primary)]">{current.f}%</span>
-          </div>
-        </div>
-      </div>
-
-      {!compact && (
-        <div className="flex items-center justify-between border-t border-dashed border-[var(--border-strong)] pt-2.5 font-mono text-[9px] text-[var(--ink-secondary)]">
-          <span>Target Split ({slot})</span>
-          <span className="font-semibold text-[var(--accent)]">{current.kcal}</span>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export function ProjectArtworkSwitch({
   projectId,
   compact = false,
@@ -946,12 +754,8 @@ export function ProjectArtworkSwitch({
       return <MeetMindArtwork compact={compact} />;
     case "contentforge-ai":
       return <ContentForgeArtwork compact={compact} />;
-    case "show-time":
-      return <ShowTimeArtwork compact={compact} />;
     case "ai-research-assistant":
       return <ResearchAgentArtwork compact={compact} />;
-    case "nutri-guide":
-      return <NutriGuideArtwork compact={compact} />;
     default:
       return null;
   }

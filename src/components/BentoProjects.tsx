@@ -17,7 +17,6 @@ const CATEGORIES = [
   "Real-Time & P2P",
   "GraphRAG & AI",
   "Full-Stack AI",
-  "Full-Stack",
 ] as const;
 
 export function BentoProjects({ onSelectProject }: BentoProjectsProps) {
@@ -61,6 +60,7 @@ export function BentoProjects({ onSelectProject }: BentoProjectsProps) {
       if (visibleProjects.length === 2 || visibleProjects.length === 4) return "lg:col-span-6";
       return "lg:col-span-4";
     }
+    if (visibleProjects.length === 7 && idx === 6) return "lg:col-span-12";
     if (idx < 6) return "lg:col-span-6";
     return "lg:col-span-4";
   };
@@ -254,7 +254,7 @@ export function BentoProjects({ onSelectProject }: BentoProjectsProps) {
                 </span>
 
                 <span className="rounded-full border border-[var(--border-hairline)] bg-[var(--bg-paper)] px-2 py-0.5 font-mono text-[10px] font-semibold text-[var(--accent)]">
-                  {showAll ? "FIG. 01–09" : `+${extraCount} MORE`}
+                  {showAll ? `FIG. 01–0${PROJECTS.length}` : `+${extraCount} MORE`}
                 </span>
 
                 <motion.span
