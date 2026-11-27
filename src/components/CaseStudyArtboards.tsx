@@ -516,61 +516,71 @@ function OdysseyCaseArtboard() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 3. GENOMEGUIDE                                                             */
+/* 3. GENOMEGUIDE V2                                                          */
 /* -------------------------------------------------------------------------- */
 function GenomeCaseArtboard() {
   const variants = [
     {
       id: "brca1",
       label: "BRCA1 c.68_69delAG",
-      rules: ["PVS1", "PS3"],
+      rules: ["PVS1 (+8)", "PS3 (+4)"],
+      points: "+12 pts",
+      posterior: "99.86%",
+      meterPct: 96,
       verdict: "Pathogenic",
-      clinvar: "★3 Expert Panel (95 submitters)",
-      gnomad: "AF 0.000116 (169 / 1.46M alleles)",
-      pmid: "PMID: 42676320 · 40257527",
-      latency: "3,062 ms",
+      clinvar: "★3 Expert Panel (98 submitters)",
+      gnomad: "AF 0.000116 · ASJ GrpMax 0.42%",
+      vep: "Exon 2/23 · Non-NMD · UniProt RING",
+      vusHint: null,
+    },
+    {
+      id: "splice6",
+      label: "BRCA1 c.5152+6del",
+      rules: ["PM2 (+2)", "PVS1 Blocked"],
+      points: "+2 pts",
+      posterior: "32.46%",
+      meterPct: 55,
+      verdict: "VUS (Fixed V1 Bug)",
+      clinvar: "★1 Uncertain Significance",
+      gnomad: "Absent in gnomAD v4 (GrpMax 0.0%)",
+      vep: "Splice offset +6 (|offset|>2) · SpliceAI < 0.8",
+      vusHint: "VUS Gap Solver (+4 pts for Likely Pathogenic): De novo PS2 (+4) or Functional Assay PS3 (+4)",
     },
     {
       id: "cftr",
       label: "CFTR c.1521_1523delCTT",
-      rules: ["PVS1", "PS3", "PM2"],
+      rules: ["PVS1 (+8)", "PS3 (+4)"],
+      points: "+12 pts",
+      posterior: "99.86%",
+      meterPct: 96,
       verdict: "Pathogenic",
-      clinvar: "★4 Practice Guideline",
-      gnomad: "AF 0.0068 (ΔF508)",
-      pmid: "PMID: 39184420",
-      latency: "2,840 ms",
+      clinvar: "★4 Practice Guideline (ΔF508)",
+      gnomad: "Recessive Guard · BS1 2% Cutoff",
+      vep: "ABC Transporter Domain · Ensembl MANE",
+      vusHint: null,
     },
     {
       id: "benign",
       label: "BRCA1 c.1314G>A",
-      rules: ["BA1", "BP6"],
-      verdict: "Likely Benign",
+      rules: ["BA1 (−8)", "BP6 (−1)"],
+      points: "−9 pts",
+      posterior: "0.14%",
+      meterPct: 12,
+      verdict: "Benign",
       clinvar: "★3 Benign Consensus",
-      gnomad: "AF 0.0541 (Common SNP)",
-      pmid: "PMID: 31131967",
-      latency: "2,410 ms",
-    },
-    {
-      id: "vus",
-      label: "BRCA1 c.3306T>A",
-      rules: [] as string[],
-      verdict: "Conservative VUS",
-      clinvar: "Conflicting / Uncertain",
-      gnomad: "AF 0.00004 (Insufficient)",
-      pmid: "PMID: 35665744",
-      latency: "2,790 ms",
+      gnomad: "Global 5.41% · 7-Pop Exceeds BA1",
+      vep: "Synonymous · REVEL/AM Benign",
+      vusHint: null,
     },
   ];
   const [idx, setIdx] = useState(0);
   const active = variants[idx];
-  const allRules = ["PVS1", "PS3", "PM2", "BA1", "BP6"];
 
-  const traceWaterfall = [
-    { name: "Parser Agent", ms: 280, pct: 20 },
-    { name: "ClinVar + gnomAD + PubMed", ms: 850, pct: 60 },
-    { name: "ACMG Rule Engine", ms: 12, pct: 5 },
-    { name: "Explainer Synthesis", ms: 1400, pct: 95 },
-    { name: "Adversarial Critic", ms: 520, pct: 38 },
+  const stressBuckets = [
+    { name: "Canonical Pathogenic / Benign (100)", acc: 79, label: "79.0% · 0 Flips" },
+    { name: "Splice & NMD-Escape Traps (50)", acc: 88, label: "88.0% · 0 Flips" },
+    { name: "Ancestry-Biased GrpMax Traps (50)", acc: 100, label: "100.0% · 0 Flips" },
+    { name: "Conflicting ClinVar / VUS (100)", acc: 100, label: "100.0% · 0 Flips" },
   ];
 
   return (
@@ -578,7 +588,7 @@ function GenomeCaseArtboard() {
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-hairline)] pb-4">
         <div className="flex items-center gap-2 font-mono text-xs text-[var(--ink-primary)]">
           <Dna className="h-4 w-4 text-[var(--accent)]" />
-          <span className="font-semibold">DETERMINISTIC ACMG + DUAL-RAG LAB</span>
+          <span className="font-semibold">GENOMEGUIDE V2 · CLINGEN BAYESIAN ACMG &amp; 5-SOURCE RAG</span>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
@@ -602,7 +612,7 @@ function GenomeCaseArtboard() {
         </div>
       </div>
 
-      {/* Smooth DNA Helix Scanner Strip */}
+      {/* Smooth DNA Helix Scanner + Protein Pin */}
       <div className="mt-5 flex items-center justify-center overflow-hidden rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] px-4 py-2.5">
         <svg viewBox="0 0 420 44" className="h-11 w-full max-w-2xl" aria-hidden="true">
           {[32, 64, 96, 160, 192, 224, 288, 320, 352, 384].map((x) => (
@@ -643,31 +653,39 @@ function GenomeCaseArtboard() {
 
       <div className="mt-5 grid gap-6 lg:grid-cols-12">
         <div className="space-y-4 rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-5 lg:col-span-7">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="font-mono text-[11px] font-semibold text-[var(--ink-primary)]">
               {active.label}
             </span>
-            <span className="rounded-full bg-[var(--accent)] px-3 py-0.5 font-mono text-[10px] font-semibold text-white">
-              {active.verdict}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[10px] font-semibold text-[var(--ink-secondary)]">
+                {active.points} · P={active.posterior}
+              </span>
+              <span className="rounded-full bg-[var(--accent)] px-3 py-0.5 font-mono text-[10px] font-semibold text-white">
+                {active.verdict}
+              </span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 text-center font-mono text-xs sm:grid-cols-5">
-            {allRules.map((rule) => {
-              const hit = active.rules.includes(rule);
-              return (
-                <div
-                  key={rule}
-                  className={`rounded-xl border py-2 font-semibold transition-all ${
-                    hit
-                      ? "border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)]"
-                      : "border-[var(--border-hairline)] bg-[var(--bg-card)] text-[var(--ink-muted)] opacity-50"
-                  }`}
+          {/* Tavtigian Bayesian Point Gauge */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
+              {active.rules.map((r) => (
+                <span
+                  key={r}
+                  className="rounded-lg border border-[var(--accent)]/40 bg-[var(--accent-soft)] px-2.5 py-1 font-semibold text-[var(--accent)]"
                 >
-                  {rule}
-                </div>
-              );
-            })}
+                  {r}
+                </span>
+              ))}
+            </div>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--bg-well)]">
+              <motion.div
+                animate={{ width: `${active.meterPct}%` }}
+                transition={{ type: "spring", stiffness: 200, damping: 24 }}
+                className="h-full rounded-full bg-[var(--accent)]"
+              />
+            </div>
           </div>
 
           <div className="grid gap-2.5 sm:grid-cols-3">
@@ -676,57 +694,69 @@ function GenomeCaseArtboard() {
               <div className="mt-1 font-semibold text-[var(--ink-primary)]">{active.clinvar}</div>
             </div>
             <div className="rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-3 font-mono text-[10px]">
-              <div className="text-[var(--ink-muted)]">Broad gnomAD v4</div>
+              <div className="text-[var(--ink-muted)]">gnomAD 7-Pop GrpMax</div>
               <div className="mt-1 font-semibold text-[var(--ink-primary)]">{active.gnomad}</div>
             </div>
             <div className="rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-3 font-mono text-[10px]">
-              <div className="text-[var(--ink-muted)]">PubMed RAG</div>
-              <div className="mt-1 font-semibold text-[var(--ink-primary)]">{active.pmid}</div>
+              <div className="text-[var(--ink-muted)]">Ensembl + MyVariant</div>
+              <div className="mt-1 font-semibold text-[var(--ink-primary)]">{active.vep}</div>
             </div>
           </div>
+
+          {active.vusHint && (
+            <div className="rounded-xl border border-dashed border-[var(--accent)]/50 bg-[var(--accent-soft)]/50 px-3.5 py-2 font-mono text-[10px] text-[var(--ink-primary)]">
+              {active.vusHint}
+            </div>
+          )}
         </div>
 
-        {/* Right 5 Cols: Benchmark + LangSmith Waterfall */}
+        {/* Right 5 Cols: 300-Variant 4-Bucket Benchmark */}
         <div className="flex flex-col justify-between rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-5 lg:col-span-5">
           <div>
             <div className="flex items-center justify-between font-mono text-[10px] uppercase text-[var(--ink-muted)]">
               <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--accent)]">
                 <ShieldCheck className="h-3.5 w-3.5" />
-                50-Variant ClinVar Eval
+                300-Variant Stress Eval
               </span>
-              <span>{active.latency}</span>
+              <span>ECE 0.0431</span>
             </div>
 
-            <div className="mt-3 grid grid-cols-2 gap-2.5">
-              <div className="rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-3">
-                <div className="text-xl font-bold text-[var(--accent)]">0 / 50</div>
-                <div className="font-mono text-[9.5px] text-[var(--ink-secondary)]">
-                  Directional Errors
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              <div className="rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-2.5">
+                <div className="text-lg font-bold text-[var(--accent)]">91.0%</div>
+                <div className="font-mono text-[9px] text-[var(--ink-secondary)]">
+                  Combined Acc
                 </div>
               </div>
-              <div className="rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-3">
-                <div className="text-xl font-bold text-[var(--ink-primary)]">0.0%</div>
-                <div className="font-mono text-[9.5px] text-[var(--ink-secondary)]">
-                  Hallucination Rate
+              <div className="rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-2.5">
+                <div className="text-lg font-bold text-[var(--ink-primary)]">0 / 300</div>
+                <div className="font-mono text-[9px] text-[var(--ink-secondary)]">
+                  Dir. Flips
+                </div>
+              </div>
+              <div className="rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-2.5">
+                <div className="text-lg font-bold text-[var(--ink-primary)]">0.0%</div>
+                <div className="font-mono text-[9px] text-[var(--ink-secondary)]">
+                  Hallucination
                 </div>
               </div>
             </div>
 
-            <div className="mt-3.5 space-y-1.5">
-              {traceWaterfall.map((t, i) => (
-                <div key={t.name} className="font-mono text-[9.5px]">
+            <div className="mt-3.5 space-y-2">
+              {stressBuckets.map((b, i) => (
+                <div key={b.name} className="font-mono text-[9.5px]">
                   <div className="flex justify-between text-[var(--ink-secondary)]">
-                    <span>{t.name}</span>
-                    <span>{t.ms} ms</span>
+                    <span>{b.name}</span>
+                    <span className="font-semibold text-[var(--ink-primary)]">{b.label}</span>
                   </div>
-                  <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-[var(--bg-well)]">
+                  <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-[var(--bg-well)]">
                     <motion.div
                       initial={{ width: 0 }}
-                      whileInView={{ width: `${t.pct}%` }}
+                      whileInView={{ width: `${b.acc}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.65, delay: i * 0.06 }}
                       className={`h-full rounded-full ${
-                        t.ms === 12 ? "bg-[var(--accent)]" : "bg-[var(--ink-primary)]"
+                        b.acc === 100 ? "bg-[var(--accent)]" : "bg-[var(--ink-primary)]"
                       }`}
                     />
                   </div>

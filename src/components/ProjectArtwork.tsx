@@ -262,35 +262,40 @@ export function OdysseyArtwork({ compact = false }: ArtworkProps) {
 }
 
 /**
- * FIG. 03 — GenomeGuide:
- * Smooth Dual-Sine DNA Helix Scanner + Interactive 5-Rule ACMG Matrix
+ * FIG. 03 — GenomeGuide V2:
+ * Dual-Sine DNA + Splice/NMD Scanner, Bayesian Evidence Point Meter & GrpMax Telemetry
  */
 export function GenomeArtwork({ compact = false }: ArtworkProps) {
-  const [variant, setVariant] = useState<"BRCA1" | "VUS" | "Benign">("BRCA1");
+  const [variant, setVariant] = useState<"BRCA1" | "Splice+6" | "GrpMax">("BRCA1");
 
   const variants = {
     BRCA1: {
       hgvs: "BRCA1 c.68_69delAG",
-      triggered: ["PVS1", "PS3", "PM2"],
+      pts: "+12 pts · 99.9%",
+      pct: 95,
+      badges: ["PVS1 +8", "PS3 +4"],
       verdict: "PATHOGENIC",
-      af: "AF 0.00011",
+      sub: "5-API RAG · ECE 0.0431",
     },
-    VUS: {
-      hgvs: "BRCA1 c.3306T>A",
-      triggered: [] as string[],
-      verdict: "CONSERVATIVE VUS",
-      af: "AF 0.00004",
+    "Splice+6": {
+      hgvs: "BRCA1 c.5152+6del",
+      pts: "+2 pts · 32.5%",
+      pct: 55,
+      badges: ["PM2 +2", "PVS1 Guard"],
+      verdict: "VUS RESOLVED",
+      sub: "|offset|>2 Blocked",
     },
-    Benign: {
-      hgvs: "BRCA1 c.1314G>A",
-      triggered: ["BA1", "BP6"],
-      verdict: "LIKELY BENIGN",
-      af: "AF 0.05400",
+    GrpMax: {
+      hgvs: "SAS Pop 2.8% Spike",
+      pts: "−4 pts · 0.6%",
+      pct: 25,
+      badges: ["BS1 −4", "BP4 −1"],
+      verdict: "ANCESTRY SAFE",
+      sub: "7-Pop GrpMax Guard",
     },
   };
 
   const current = variants[variant];
-  const acmgRules = ["PVS1", "PS3", "PM2", "BA1", "BP6"];
 
   return (
     <div
@@ -300,10 +305,10 @@ export function GenomeArtwork({ compact = false }: ArtworkProps) {
     >
       <div className="flex items-center justify-between gap-2">
         <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ink-muted)]">
-          Dual-RAG · ACMG
+          Bayesian ACMG · 5-RAG
         </span>
         <div className="flex gap-1">
-          {(["BRCA1", "VUS", "Benign"] as const).map((v) => (
+          {(["BRCA1", "Splice+6", "GrpMax"] as const).map((v) => (
             <button
               key={v}
               type="button"
@@ -311,7 +316,7 @@ export function GenomeArtwork({ compact = false }: ArtworkProps) {
                 e.stopPropagation();
                 setVariant(v);
               }}
-              className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] transition-colors ${
+              className={`rounded-md px-1.5 py-0.5 font-mono text-[8.5px] transition-colors ${
                 variant === v
                   ? "bg-[var(--ink-primary)] text-[var(--bg-paper)]"
                   : "bg-[var(--bg-card)] text-[var(--ink-muted)]"
@@ -326,7 +331,6 @@ export function GenomeArtwork({ compact = false }: ArtworkProps) {
       {/* Smooth Intersecting Dual-Sine DNA Ribbon + Scanner Pulse */}
       <div className="relative my-2 flex items-center justify-center overflow-hidden rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-card)]/70 py-1.5">
         <svg viewBox="0 0 200 44" className="h-[42px] w-full max-w-[210px]" aria-hidden="true">
-          {/* Base-pair rungs */}
           {[22, 42, 62, 100, 120, 140, 178].map((x) => (
             <line
               key={x}
@@ -339,7 +343,6 @@ export function GenomeArtwork({ compact = false }: ArtworkProps) {
               strokeDasharray="1.5 1.5"
             />
           ))}
-          {/* Strand A */}
           <path
             d="M 8 22 C 28 4, 62 4, 82 22 C 102 40, 136 40, 156 22 C 170 9, 184 9, 194 22"
             fill="none"
@@ -347,7 +350,6 @@ export function GenomeArtwork({ compact = false }: ArtworkProps) {
             strokeWidth="1.6"
             strokeLinecap="round"
           />
-          {/* Strand B */}
           <path
             d="M 8 22 C 28 40, 62 40, 82 22 C 102 4, 136 4, 156 22 C 170 35, 184 35, 194 22"
             fill="none"
@@ -355,7 +357,8 @@ export function GenomeArtwork({ compact = false }: ArtworkProps) {
             strokeWidth="1.6"
             strokeLinecap="round"
           />
-          {/* Sweeping Variant Readout Scan Line */}
+          {/* Domain Pin */}
+          <circle cx="82" cy="22" r="3" fill="var(--accent)" />
           <motion.line
             y1="4"
             y2="40"
@@ -368,31 +371,38 @@ export function GenomeArtwork({ compact = false }: ArtworkProps) {
         </svg>
       </div>
 
-      {/* 5-Criterion ACMG Rule Chips */}
+      {/* Bayesian Point Gauge + Triggered Chips */}
       {!compact && (
         <div className="space-y-2 border-t border-dashed border-[var(--border-strong)] pt-2.5">
-          <div className="grid grid-cols-5 gap-1 text-center font-mono text-[8.5px]">
-            {acmgRules.map((rule) => {
-              const hit = current.triggered.includes(rule);
-              return (
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex gap-1">
+              {current.badges.map((badge) => (
                 <span
-                  key={rule}
-                  className={`rounded-md border py-0.5 font-semibold transition-colors ${
-                    hit
-                      ? "border-[var(--accent)] bg-[var(--accent)] text-white"
-                      : "border-[var(--border-hairline)] bg-[var(--bg-card)] text-[var(--ink-muted)] opacity-60"
-                  }`}
+                  key={badge}
+                  className="rounded-md border border-[var(--accent)]/40 bg-[var(--accent-soft)] px-1.5 py-0.5 font-mono text-[8.5px] font-semibold text-[var(--accent)]"
                 >
-                  {rule}
+                  {badge}
                 </span>
-              );
-            })}
+              ))}
+            </div>
+            <span className="font-mono text-[9px] font-semibold text-[var(--ink-primary)]">
+              {current.pts}
+            </span>
           </div>
+
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--bg-card)]">
+            <motion.div
+              animate={{ width: `${current.pct}%` }}
+              transition={{ type: "spring", stiffness: 210, damping: 22 }}
+              className="h-full rounded-full bg-[var(--accent)]"
+            />
+          </div>
+
           <div className="flex items-center justify-between font-mono text-[9px]">
             <span className="text-[var(--ink-secondary)]">
-              {current.hgvs} · {current.af}
+              {current.hgvs} · {current.sub}
             </span>
-            <span className="font-semibold text-[var(--accent)]">{current.verdict} ✓</span>
+            <span className="font-semibold text-[var(--accent)]">0/300 Flips ✓</span>
           </div>
         </div>
       )}

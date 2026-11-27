@@ -26,11 +26,12 @@ export function ProjectSimulator({ projectId }: { projectId: string }) {
     cmo: "100-Case Eval: 0.65×Graph + 0.35×Panel − 0.08×Obj → 57.0% Top-1 · 71.0% Top-3 · 74.0% Top-5 · 0.642 MRR",
   };
 
-  // GenomeGuide
-  const [variantKey, setVariantKey] = useState<"brca" | "cftr">("brca");
+  // GenomeGuide V2
+  const [variantKey, setVariantKey] = useState<"brca" | "splice" | "eval">("brca");
   const variantData = {
-    brca: "BRCA1 c.68_69delAG → ClinVar ★3 Pathogenic · gnomAD AF 0.000116 · Triggered: PVS1 + PM2 → Critic PASSED ✓",
-    cftr: "CFTR c.1521_1523delCTT → ClinVar ★4 Pathogenic · gnomAD AF 0.0068 · 18 PubMed PMIDs verified → Critic PASSED ✓",
+    brca: "BRCA1 c.68_69delAG → PVS1 (+8) + PS3 (+4) = +12 pts (P=99.86% Pathogenic) · ASJ GrpMax 0.42% · Critic PASSED ✓",
+    splice: "BRCA1 c.5152+6del → |offset|=6 > 2 blocks PVS1 → PM2 (+2) VUS (32.5%) + Gap Solver: PS2/PS3 (+4) flips → Likely Pathogenic",
+    eval: "300-Variant Stress Eval → 91.0% Acc (100% GrpMax · 88% NMD/Splice · 100% Conflicting) · 0/300 Flips · ECE 0.0431",
   };
 
   // FluentPath
@@ -167,13 +168,14 @@ export function ProjectSimulator({ projectId }: { projectId: string }) {
       <div className="rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-paper)] p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">
-            Deterministic ACMG + Critic Trace
+            GenomeGuide V2 Engine Trace
           </span>
-          <div className="flex gap-1.5">
+          <div className="flex flex-wrap gap-1.5">
             {(
               [
-                ["brca", "BRCA1 c.68_69delAG"],
-                ["cftr", "CFTR p.Phe508del"],
+                ["brca", "BRCA1 (+12 pts)"],
+                ["splice", "Splice +6 Guard"],
+                ["eval", "300-Case Eval"],
               ] as const
             ).map(([k, label]) => (
               <button

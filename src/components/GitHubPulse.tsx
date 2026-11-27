@@ -71,7 +71,7 @@ const RECENT_COMMITS = [
   },
   {
     repo: "GenomeGuide",
-    msg: "feat(acmg): ClinVar + gnomAD Dual-RAG & reflexive critic loop",
+    msg: "feat(v2): ClinGen Bayesian ACMG, Ensembl NMD, GrpMax & 300-case eval",
     tag: "LangGraph",
   },
   {
