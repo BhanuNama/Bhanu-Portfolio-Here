@@ -1,3 +1,9 @@
+export interface ProjectMediaItem {
+  src: string;
+  caption: string;
+  tag?: string;
+}
+
 export interface ProjectItem {
   id: string;
   fig: string;
@@ -20,6 +26,7 @@ export interface ProjectItem {
     decisions: { title: string; detail: string }[];
     specs: { label: string; value: string }[];
   };
+  gallery?: ProjectMediaItem[];
   liveUrl: string;
   githubUrl: string;
 }
@@ -150,6 +157,58 @@ export const PROJECTS: ProjectItem[] = [
         { label: "Tests", value: "18 Vitest sync tests + Playwright Chromium E2E" },
       ],
     },
+    gallery: [
+      {
+        src: "/projects/the-orbit/1.png",
+        caption: "Main Orbit Landing — Instant zero-signup watch-party room creation, live preview stage & reaction widgets.",
+        tag: "Landing",
+      },
+      {
+        src: "/projects/the-orbit/2.png",
+        caption: "Core Real-Time Engines — O(1) Binary-Tree 4K P2P Swarm, 2-Way Direct P2P → Simulcast promotion & Hi-Fi Music Lounge.",
+        tag: "Engines",
+      },
+      {
+        src: "/projects/the-orbit/3.png",
+        caption: "Dual-Track Acoustic Isolation — 48 kHz / 256 kbps Opus soundtrack kept cleanly separated from voice mics + Bluetooth HFP guard.",
+        tag: "Audio Isolation",
+      },
+      {
+        src: "/projects/the-orbit/4.png",
+        caption: "Live Direct P2P Screen Share Stage with upload bitrate health alerts, GPU preview saver & real-time room chat/GIFs.",
+        tag: "Screen Share",
+      },
+      {
+        src: "/projects/the-orbit/5.png",
+        caption: "Hi-Fi P2P Music Lounge featuring lossless audio streaming, reactive spectrum bars, shared Queue & synced .lrc Lyrics.",
+        tag: "Music Lounge",
+      },
+      {
+        src: "/projects/the-orbit/6.png",
+        caption: "YouTube Sync & Queue Modal — paste link or ID for instant preview, synced room playback & playlist queueing.",
+        tag: "YouTube Queue",
+      },
+      {
+        src: "/projects/the-orbit/7.png",
+        caption: "Synchronized YouTube Watch Theater running NTP Min-RTT playback lockstep alongside live participant tiles.",
+        tag: "Theater Stage",
+      },
+      {
+        src: "/projects/the-orbit/8.png",
+        caption: "4K Local Movie Drop — peer-to-peer fMP4 chunk swarm (.mp4, .mkv, .webm) with offline .srt / .vtt subtitle loading.",
+        tag: "4K P2P Swarm",
+      },
+      {
+        src: "/projects/the-orbit/9.png",
+        caption: "Post-Session Reaction Recap — interactive timeline activity heatmap and top emoji breakdowns across the screening.",
+        tag: "Session Recap",
+      },
+      {
+        src: "/projects/the-orbit/10.png",
+        caption: "Live Cinema Themes & Dynamic Ambilight Switcher — Midnight Theater, True OLED, Retro 80s Drive-in, Cyberpunk & Nordic Woods.",
+        tag: "Themes & Ambilight",
+      },
+    ],
     liveUrl: "https://the-orbit-room.vercel.app/",
     githubUrl: "https://github.com/BhanuNama/Popcorn-Room",
   },

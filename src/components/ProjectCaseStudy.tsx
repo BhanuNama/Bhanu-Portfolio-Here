@@ -17,6 +17,7 @@ import {
 import { PROJECTS, ProjectItem } from "@/data/portfolio";
 import { SmoothScrollProvider, useAppContext } from "./SmoothScrollProvider";
 import { CaseStudyArtboard } from "./CaseStudyArtboards";
+import { ProjectGallery } from "./ProjectGallery";
 import { ProjectSimulator } from "./ProjectSimulator";
 import { InteractivePaperField } from "./InteractivePaperField";
 import { Magnetic, TiltPaperCard } from "./Magnetic";
@@ -195,6 +196,13 @@ function CaseStudyContent({ project }: { project: ProjectItem }) {
         >
           <CaseStudyArtboard projectId={project.id} />
         </motion.section>
+
+        {/* Optional Product Screenshots & Live UI Showcase (auto-hides if no pics yet) */}
+        <ProjectGallery
+          projectTitle={project.title}
+          liveUrl={project.liveUrl}
+          gallery={project.gallery}
+        />
 
         {/* Problem vs Architecture Solution with 3D Paper Tilt */}
         <section className="mt-14 grid gap-6 md:grid-cols-2">
